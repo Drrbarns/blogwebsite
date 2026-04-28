@@ -12,7 +12,8 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
     "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",
-    "seed": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/seed.ts"
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/seed.ts",
+    "create-admin": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/create-admin.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.84.1",
@@ -49,6 +50,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "pg": "^8.20.0",
+    "sass": "^1.77.4",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"

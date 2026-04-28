@@ -41,11 +41,27 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     meta: {
+      title: "Ontario CMS",
       titleSuffix: " — Ontario CMS",
+      description:
+        "Editorial workspace for the Ontario blog — write, schedule and ship.",
       icons: [{ rel: "icon", url: "/favicon.ico" }],
     },
     components: {
-      // Phase 2 will plug in custom dashboard widgets + SEO panel here.
+      graphics: {
+        Logo: "@/components/admin/brand/logo#default",
+        Icon: "@/components/admin/brand/icon#default",
+      },
+      beforeLogin: ["@/components/admin/auth/login-before#default"],
+      afterLogin: ["@/components/admin/auth/login-after#default"],
+      beforeNavLinks: ["@/components/admin/nav/sidebar-header#default"],
+      afterNavLinks: ["@/components/admin/nav/sidebar-footer#default"],
+      header: ["@/components/admin/header/top-bar#default"],
+      views: {
+        dashboard: {
+          Component: "@/components/admin/dashboard/index#default",
+        },
+      },
     },
     livePreview: {
       breakpoints: [
