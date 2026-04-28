@@ -1,0 +1,24 @@
+/* Payload admin panel custom tweaks.
+   Keep this file small — most styling should live in the design tokens and
+   Payload's own variables so the admin feels on-brand without fighting the
+   default theme. */
+
+html[data-theme="light"] {
+  --theme-bg: #faf9f7;
+  --color-base-0: #ffffff;
+  --color-base-50: #faf9f7;
+  --color-base-100: #f1efec;
+  --color-success-500: #1f9d55;
+  --color-warning-500: #d97706;
+  --color-error-500: #dc2626;
+}
+
+html[data-theme="dark"] {
+  --theme-bg: #0b0b0f;
+}
+
+.payload-logo {
+  font-family: var(--font-plus-jakarta), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
