@@ -9,9 +9,17 @@
  *
  * Safe to run multiple times.
  */
-import { getPayload } from "payload";
-import config from "../payload.config";
-import { siteConfig } from "../lib/data/site-config";
+import type { getPayload as GetPayloadFn } from "payload";
+
+// Switch to Supabase's transaction-mode pooler (port 6543) so the script can
+// run while Vercel holds session-mode (5432) connections.
+if (process.env.DATABASE_URI) {
+  const next = process.env.DATABASE_URI.replace(":5432/", ":6543/");
+  if (next !== process.env.DATABASE_URI) {
+    process.env.DATABASE_URI = next;
+    console.log("[brand] using transaction-mode pooler (port 6543)");
+  }
+}
 
 const log = (...args: unknown[]) => console.log("[brand]", ...args);
 
@@ -21,7 +29,12 @@ async function main() {
   }
 
   log("connecting to Payload...");
-  const payload = await getPayload({ config });
+  const { getPayload } = await import("payload");
+  const { default: config } = await import("../payload.config");
+  const { siteConfig } = await import("../lib/data/site-config");
+
+  type PayloadInstance = Awaited<ReturnType<typeof GetPayloadFn>>;
+  const payload: PayloadInstance = await getPayload({ config });
 
   try {
     await payload.updateGlobal({
@@ -60,9 +73,10 @@ async function main() {
       data: {
         ...current,
         brand: { label: siteConfig.name, tagline: "A girl with many sides." },
+        cta: { label: "Contact us", url: "/contact", enabled: true },
       } as never,
     });
-    log("navigation brand updated (links/columns preserved)");
+    log("navigation brand + CTA updated (links/columns preserved)");
   } catch (err) {
     log("navigation update failed:", (err as Error).message);
   }

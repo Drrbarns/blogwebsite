@@ -104,7 +104,7 @@ export const Navigation: GlobalConfig = {
       type: "group",
       admin: { description: "Right-aligned button in the navbar." },
       fields: [
-        { name: "label", type: "text", defaultValue: "Buy Now" },
+        { name: "label", type: "text", defaultValue: "Contact us" },
         { name: "url", type: "text", defaultValue: "/contact" },
         { name: "enabled", type: "checkbox", defaultValue: true },
       ],

@@ -31,7 +31,7 @@ export function Navbar({
   brandLogoUrl?: string | null;
 } = {}) {
   const navigation: NavItem[] = links && links.length ? links : DEFAULT_NAV;
-  const ctaLink: NavbarCtaLink = cta ?? { label: "Buy Now", href: "/contact" };
+  const ctaLink: NavbarCtaLink = cta ?? { label: "Contact us", href: "/contact" };
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 

@@ -62,8 +62,8 @@ interface ContactSectionProps {
 type Status = "idle" | "loading" | "success" | "error";
 
 export function ContactSection({
-  email = "hello@ontario.com",
-  phone = "+1 (555) 010-2030",
+  email = "hello@aboutagirl.blog",
+  phone = "",
   address,
   socials = {},
   formHeading = "Drop Us a Line",
@@ -112,28 +112,32 @@ export function ContactSection({
       <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-16">
         <SectionReveal direction="right">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
-            <div>
-              <h3 className="text-[11px] font-bold uppercase tracking-widest text-muted mb-2">
-                Email Address
-              </h3>
-              <a
-                href={`mailto:${email}`}
-                className="text-base font-semibold text-foreground hover:text-red-500 transition-colors break-all"
-              >
-                {email}
-              </a>
-            </div>
-            <div>
-              <h3 className="text-[11px] font-bold uppercase tracking-widest text-muted mb-2">
-                Phone Number
-              </h3>
-              <a
-                href={`tel:${phone.replace(/\s+/g, "")}`}
-                className="text-base font-semibold text-foreground hover:text-red-500 transition-colors"
-              >
-                {phone}
-              </a>
-            </div>
+            {email && (
+              <div>
+                <h3 className="text-[11px] font-bold uppercase tracking-widest text-muted mb-2">
+                  Email Address
+                </h3>
+                <a
+                  href={`mailto:${email}`}
+                  className="text-base font-semibold text-foreground hover:text-red-500 transition-colors break-all"
+                >
+                  {email}
+                </a>
+              </div>
+            )}
+            {phone && (
+              <div>
+                <h3 className="text-[11px] font-bold uppercase tracking-widest text-muted mb-2">
+                  Phone Number
+                </h3>
+                <a
+                  href={`tel:${phone.replace(/\s+/g, "")}`}
+                  className="text-base font-semibold text-foreground hover:text-red-500 transition-colors"
+                >
+                  {phone}
+                </a>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">

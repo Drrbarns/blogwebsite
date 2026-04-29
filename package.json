@@ -14,7 +14,7 @@
     "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/seed.ts",
     "create-admin": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/create-admin.ts",
-    "update-brand": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/update-brand.ts",
+    "update-brand": "cross-env NODE_ENV=production NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/update-brand.ts",
     "rewrite-content": "cross-env NODE_ENV=production NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/rewrite-content.ts",
     "insert-burnout-post": "cross-env NODE_ENV=production NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/insert-burnout-post.ts",
     "generate-og": "tsx scripts/generate-og.ts"
