@@ -22,23 +22,9 @@
   --radius-full: 9999px;
 }
 
-html.dark {
-  --color-background: #0b0b0f;
-  --color-foreground: #f5f5f4;
-  --color-muted: #a8a29e;
-  --color-muted-foreground: #78716c;
-  --color-border: #262626;
-  --color-card: #141418;
-  --color-surface: #18181b;
-}
-
 html {
   scroll-behavior: smooth;
-}
-
-html.dark body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+  color-scheme: light;
 }
 
 body {

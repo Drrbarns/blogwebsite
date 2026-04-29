@@ -172,8 +172,6 @@ Layered on top of Phase 1:
   search plugin.
 - **Custom 404 + global-error** — suggests recent posts + sends the
   missed path to `/api/log/404`.
-- **Dark mode** — `next-themes` toggle in the navbar, CSS variables in
-  `globals.css`.
 - **Article enhancements** — top reading-progress bar, scroll-spy TOC
   sidebar, share buttons (X, LinkedIn, Facebook, copy link).
 

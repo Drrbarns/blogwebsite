@@ -6,7 +6,6 @@ import { Search, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/shared/logo";
-import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { SearchDialog } from "@/components/search/search-dialog";
 
 type NavItem = { label: string; href: string; external?: boolean | null };
@@ -100,8 +99,6 @@ export function Navbar({
               <Search className="w-[18px] h-[18px]" />
             </button>
 
-            <ThemeToggle />
-
             {ctaLink && (
               <Link
                 href={ctaLink.href}
@@ -174,7 +171,6 @@ export function Navbar({
                 >
                   <Search className="w-[18px] h-[18px]" />
                 </button>
-                <ThemeToggle className="flex items-center justify-center w-10 h-10 rounded-full text-foreground/70 hover:bg-stone-100 transition-colors" />
                 {ctaLink && (
                   <Link
                     href={ctaLink.href}
