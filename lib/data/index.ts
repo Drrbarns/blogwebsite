@@ -1,6 +1,7 @@
 export { siteConfig, navigation, footerCategories } from "./site-config";
 export {
   categories,
+  aboutAGirlPosts,
   heroFeaturedPosts,
   freshPosts,
   recentArticles,

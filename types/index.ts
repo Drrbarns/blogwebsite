@@ -9,6 +9,14 @@ export interface Category {
   color?: string;
 }
 
+export type PostSection =
+  | { type: "p"; text: string }
+  | { type: "h2"; text: string }
+  | { type: "h3"; text: string }
+  | { type: "ul"; items: string[] }
+  | { type: "ol"; items: string[] }
+  | { type: "quote"; text: string };
+
 export interface BlogPost {
   id: string;
   slug: string;
@@ -17,10 +25,12 @@ export interface BlogPost {
   coverImage: string;
   category: Category;
   categories?: Category[];
+  tags?: string[];
   author: Author;
   publishedAt: string;
   readingTime: number;
   featured?: boolean;
+  content?: PostSection[];
 }
 
 export interface TrendingItem {
