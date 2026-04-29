@@ -27,7 +27,7 @@ export const SITE_DESCRIPTION =
   "A personal blog about faith, sport, medicine and the small habits in between — written by a doctor.";
 
 export const SITE_OG_IMAGE =
-  fallback(process.env.NEXT_PUBLIC_OG_IMAGE) || "/images/og-default.svg";
+  fallback(process.env.NEXT_PUBLIC_OG_IMAGE) || "/images/og-default.png";
 
 export const SITE_LOGO = "/images/logo.png";
 
