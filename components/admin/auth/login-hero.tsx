@@ -1,143 +1,45 @@
-"use client";
-
 import * as React from "react";
 
-const QUOTES: Array<{ quote: string; author: string }> = [
-  {
-    quote:
-      "Some days the call comes from the ward. Some days from the chapel. Most days, both.",
-    author: "From the journal",
-  },
-  {
-    quote:
-      "Faith is the long, slow training. Medicine is the sprint. Writing is the cool-down.",
-    author: "Notes between rounds",
-  },
-  {
-    quote:
-      "Show up. Take notes. Let the small things make the bigger story.",
-    author: "Editorial principle · 2026",
-  },
-];
-
-const HIGHLIGHTS: Array<{ title: string; copy: string }> = [
-  {
-    title: "Write in long form",
-    copy: "Lexical rich text, blocks, scheduled posts and live preview.",
-  },
-  {
-    title: "Quietly indexed",
-    copy: "Schema, OG art, sitemaps and SERP previews handled for you.",
-  },
-  {
-    title: "Built around the journal",
-    copy: "Drafts, version history, link health and a 404 log on the side.",
-  },
-];
-
-function useNow() {
-  const [now, setNow] = React.useState<Date | null>(null);
-  React.useEffect(() => {
-    setNow(new Date());
-    const t = setInterval(() => setNow(new Date()), 30_000);
-    return () => clearInterval(t);
-  }, []);
-  return now;
-}
-
+/**
+ * Brand panel rendered to the left of the login form.
+ *
+ * Deliberately minimal — a pill, the brand mark, a single tagline and a
+ * copyright line. Anything more than that turns a login screen into
+ * marketing, which is exactly what most admin logins should not look like.
+ */
 export default function LoginHero() {
-  const [idx, setIdx] = React.useState(0);
-  const now = useNow();
-
-  React.useEffect(() => {
-    const t = setInterval(
-      () => setIdx((i) => (i + 1) % QUOTES.length),
-      6500,
-    );
-    return () => clearInterval(t);
-  }, []);
-
-  const time = now
-    ? now.toLocaleTimeString(undefined, {
-        hour: "numeric",
-        minute: "2-digit",
-      })
-    : "—";
-  const date = now
-    ? now.toLocaleDateString(undefined, {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-      })
-    : "Today";
-
-  const q = QUOTES[idx];
+  const year = new Date().getFullYear();
 
   return (
-    <aside className="om-login__hero" aria-label="Welcome to the writing studio">
-      <div className="om-login__hero-orb om-login__hero-orb--a" aria-hidden />
-      <div className="om-login__hero-orb om-login__hero-orb--b" aria-hidden />
-      <div className="om-login__hero-orb om-login__hero-orb--c" aria-hidden />
-      <div className="om-login__hero-grid" aria-hidden />
+    <aside className="om-login__hero" aria-label="About a Girl studio">
+      <header className="om-login__hero-top">
+        <span className="om-login__pill">
+          <span className="om-login__pulse" aria-hidden />
+          <span>About a Girl · Studio</span>
+        </span>
+      </header>
 
-      <div className="om-login__hero-inner">
-        <div className="om-login__hero-topline">
-          <span className="om-login__pill">
-            <span className="om-login__pulse" aria-hidden />
-            <span>About a Girl · Studio · v1.0</span>
-          </span>
-          <span className="om-login__hero-time" aria-live="polite">
-            <strong>{time}</strong>
-            <span>{date}</span>
-          </span>
-        </div>
-
-        <h1 className="om-login__hero-title">
-          A quiet place to <em>write the next entry.</em>
-        </h1>
-        <p className="om-login__hero-lede">
-          Faith, sport, medicine and the small habits in between — captured one
-          post at a time. Sign in to draft, schedule and ship today's piece.
-        </p>
-
-        <ul className="om-login__hero-list">
-          {HIGHLIGHTS.map((item) => (
-            <li key={item.title}>
-              <span className="om-login__hero-bullet" aria-hidden />
-              <div>
-                <strong>{item.title}</strong>
-                <span>{item.copy}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        <figure
-          className="om-login__hero-quote"
-          aria-live="polite"
-          key={q.quote}
-        >
-          <blockquote>"{q.quote}"</blockquote>
-          <figcaption>
-            — {q.author}
-            <span className="om-login__hero-quote-dots" aria-hidden>
-              {QUOTES.map((_, i) => (
-                <span
-                  key={i}
-                  data-active={i === idx ? "1" : "0"}
-                  className="om-login__hero-quote-dot"
-                />
-              ))}
-            </span>
-          </figcaption>
-        </figure>
-
-        <footer className="om-login__hero-footer">
-          <span>Crafted for one writer</span>
-          <span aria-hidden>·</span>
-          <span>Powered by Payload &amp; Next.js</span>
-        </footer>
+      <div className="om-login__hero-center">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/logo.png"
+          alt=""
+          width={140}
+          height={140}
+          className="om-login__hero-mark"
+          aria-hidden
+        />
+        <h1 className="om-login__hero-title">About a Girl</h1>
+        <p className="om-login__hero-tag">Faith · Sport · Medicine · Life</p>
       </div>
+
+      <footer className="om-login__hero-bottom">
+        <span>© {year} About a Girl</span>
+        <span className="om-login__hero-dot" aria-hidden>
+          ·
+        </span>
+        <span>Writing studio</span>
+      </footer>
     </aside>
   );
 }

@@ -364,7 +364,7 @@ label {
 }
 
 /* ============================================================== *
- * LOGIN  — split-screen, light editorial
+ * LOGIN  — clean, professional split-screen
  * ============================================================== */
 
 .login.template-minimal,
@@ -373,50 +373,32 @@ label {
 .verify.template-minimal {
   min-height: 100vh;
   background: var(--om-bg);
-  position: relative;
-  overflow: hidden;
   font-family: var(--om-font-sans);
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(60% 50% at 6% 10%, rgba(234, 88, 12, 0.06), transparent 60%),
-      radial-gradient(50% 40% at 95% 90%, rgba(168, 162, 158, 0.10), transparent 65%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
   .template-minimal__wrap {
-    position: relative;
-    z-index: 1;
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    gap: 0;
-    width: min(1200px, 96vw);
-    min-height: min(720px, calc(100vh - 48px));
-    margin: 24px auto;
-    padding: 0;
-    background: var(--om-surface);
-    border: 1px solid var(--om-border);
-    border-radius: var(--om-radius-2xl);
-    box-shadow: var(--om-shadow-lg);
-    overflow: hidden;
-
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas:
       'hero brand'
       'hero form'
       'hero after';
     grid-template-rows: auto 1fr auto;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: var(--om-surface);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
   }
 
+  /* Payload renders its small admin logo in this slot. We hide it because
+     the left brand panel already carries the brand. */
   .login__brand {
     grid-area: brand;
-    padding: 40px 48px 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    display: none;
   }
 
   .login__form,
@@ -425,27 +407,25 @@ label {
   form.reset-password__form,
   form.verify__form {
     grid-area: form;
-    padding: 24px 48px 8px;
     width: 100%;
-    max-width: 480px;
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 0 48px;
     align-self: center;
+    justify-self: center;
 
     .field-type { margin-bottom: 18px; }
 
     > a {
       display: inline-block;
-      margin: 14px 0 22px;
+      margin: 4px 0 22px;
       font-weight: 600;
-      font-size: 13.5px;
+      font-size: 13px;
       color: var(--om-text-muted);
       text-decoration: none;
-      border-bottom: 1px dashed transparent;
-      transition: color 140ms ease, border-color 140ms ease;
+      transition: color 140ms ease;
 
-      &:hover {
-        color: var(--om-accent);
-        border-bottom-color: currentColor;
-      }
+      &:hover { color: var(--om-accent); }
     }
 
     button[type='submit'],
@@ -453,16 +433,31 @@ label {
       width: 100%;
       padding: 14px 20px !important;
       font-size: 15px !important;
+      font-weight: 600 !important;
     }
+  }
+
+  .om-login__intro {
+    grid-area: brand;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 64px 48px 16px;
+    align-self: end;
+    justify-self: center;
   }
 
   .om-login__after {
     grid-area: after;
-    padding: 16px 48px 36px;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 24px 48px 48px;
+    justify-self: center;
   }
 }
 
-/* small screens: stack */
+/* small screens: stack the brand panel above the form */
 @media (max-width: 880px) {
   .login.template-minimal .template-minimal__wrap,
   .forgot-password.template-minimal .template-minimal__wrap,
@@ -470,203 +465,150 @@ label {
   .verify.template-minimal .template-minimal__wrap {
     grid-template-columns: 1fr;
     grid-template-areas:
+      'hero'
       'brand'
       'form'
       'after';
-    width: min(560px, 96vw);
+    grid-template-rows: auto auto 1fr auto;
+  }
 
-    .om-login__hero { display: none; }
+  .om-login__hero {
+    min-height: 220px !important;
+    padding: 32px 32px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--om-border);
+  }
+
+  .om-login__hero-mark {
+    width: 88px !important;
+    height: 88px !important;
+  }
+
+  .om-login__hero-bottom {
+    display: none !important;
+  }
+
+  .login.template-minimal .login__form,
+  .forgot-password.template-minimal form.forgot-password__form,
+  .reset-password.template-minimal form.reset-password__form,
+  .verify.template-minimal form.verify__form {
+    padding: 0 24px !important;
+  }
+
+  .login.template-minimal .om-login__intro {
+    padding: 32px 24px 16px !important;
+  }
+
+  .login.template-minimal .om-login__after {
+    padding: 16px 24px 32px !important;
   }
 }
 
-/* ── Login HERO panel (light editorial) ──────────────────────────── */
+/* ── Login HERO panel (calm brand panel) ─────────────────────────── */
 
 .om-login__hero {
   grid-area: hero;
   position: relative;
-  overflow: hidden;
   background: var(--om-surface-soft);
   color: var(--om-text);
-  padding: 56px 48px 48px;
+  padding: 40px 56px;
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
   border-right: 1px solid var(--om-border);
+  overflow: hidden;
 
-  &-orb,
-  &-grid {
-    display: none;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(60% 40% at 30% 20%, rgba(234, 88, 12, 0.05), transparent 70%),
+      radial-gradient(50% 40% at 70% 90%, rgba(168, 162, 158, 0.08), transparent 65%);
+    pointer-events: none;
+    z-index: 0;
   }
 
-  &-inner {
+  > * {
     position: relative;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    width: 100%;
   }
 
-  &-topline {
+  &-top {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
   }
 
-  &-time {
-    text-align: right;
-    display: inline-flex;
+  &-center {
+    flex: 1;
+    display: flex;
     flex-direction: column;
-    line-height: 1.1;
-    font-size: 12.5px;
-    color: var(--om-text-muted);
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    max-width: 420px;
+  }
 
-    strong {
-      font-family: var(--om-font-display);
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--om-text);
-      letter-spacing: -0.02em;
-    }
+  &-mark {
+    display: block;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
   }
 
   &-title {
     font-family: var(--om-font-display);
     font-weight: 600;
-    font-size: clamp(34px, 3.4vw, 44px);
-    line-height: 1.08;
+    font-size: clamp(32px, 3.2vw, 40px);
+    line-height: 1.05;
     letter-spacing: -0.025em;
     margin: 0;
     color: var(--om-text);
-
-    em {
-      font-style: italic;
-      color: var(--om-accent);
-      font-weight: 600;
-    }
   }
 
-  &-lede {
-    font-size: 16px;
-    line-height: 1.65;
+  &-tag {
+    font-size: 14px;
     color: var(--om-text-muted);
-    max-width: 480px;
     margin: 0;
+    letter-spacing: 0.01em;
   }
 
-  &-list {
-    list-style: none;
-    margin: 4px 0 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    li {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      background: var(--om-surface);
-      border: 1px solid var(--om-border);
-      padding: 14px 16px;
-      border-radius: var(--om-radius-md);
-      transition: border-color 160ms ease, transform 160ms ease,
-        box-shadow 160ms ease;
-
-      &:hover {
-        border-color: var(--om-border-strong);
-        transform: translateY(-1px);
-        box-shadow: var(--om-shadow-sm);
-      }
-
-      div {
-        display: flex; flex-direction: column; gap: 2px;
-      }
-
-      strong {
-        color: var(--om-text); font-weight: 600; font-size: 14px;
-      }
-      span {
-        color: var(--om-text-muted); font-size: 13px; line-height: 1.5;
-      }
-    }
-  }
-
-  &-bullet {
-    width: 8px;
-    height: 8px;
-    margin-top: 7px;
-    border-radius: 50%;
-    background: var(--om-accent);
-    flex-shrink: 0;
-    box-shadow: 0 0 0 4px var(--om-accent-bg);
-  }
-
-  &-quote {
-    margin: 4px 0 0;
-    padding: 18px 20px;
-    background: var(--om-surface);
-    border: 1px solid var(--om-border);
-    border-radius: var(--om-radius-md);
-    animation: om-fade 360ms ease;
-
-    blockquote {
-      margin: 0;
-      font-family: var(--om-font-display);
-      font-style: italic;
-      font-size: 15.5px;
-      line-height: 1.55;
-      color: var(--om-text-soft);
-    }
-
-    figcaption {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--om-text-muted);
-      font-weight: 500;
-    }
-  }
-
-  &-quote-dots {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  &-quote-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--om-border-strong);
-    transition: background 160ms ease, transform 160ms ease;
-
-    &[data-active='1'] {
-      background: var(--om-accent);
-      transform: scale(1.4);
-    }
-  }
-
-  &-footer {
-    margin-top: auto;
-    padding-top: 12px;
-    border-top: 1px solid var(--om-border);
-    font-size: 12px;
-    color: var(--om-text-subtle);
+  &-bottom {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    font-size: 12px;
+    color: var(--om-text-subtle);
     font-weight: 500;
+  }
+
+  &-dot {
+    color: var(--om-text-subtle);
   }
 }
 
-@keyframes om-fade {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ── Welcome heading shown above the form on the right ──────────── */
+
+.om-login__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &-title {
+    font-family: var(--om-font-display);
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--om-text);
+    margin: 0;
+  }
+
+  &-lede {
+    font-size: 14px;
+    color: var(--om-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
 }
 
 /* ── Login pill / pulse (re-styled light) ───────────────────────── */
@@ -708,66 +650,41 @@ label {
   80%, 100% { transform: scale(2); opacity: 0; }
 }
 
-/* ── Login after-form (shortcuts + footer links) ────────────────── */
+/* ── Login after-form (links + copyright) ───────────────────────── */
 
 .om-login__after {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   font-size: 12.5px;
   color: var(--om-text-muted);
+  text-align: center;
 
-  &-shortcuts {
+  &-meta {
     display: flex;
     align-items: center;
-    gap: 14px;
-    color: var(--om-text-subtle);
-    font-weight: 500;
-  }
-
-  &-shortcut {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-
-    kbd {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 20px;
-      height: 20px;
-      padding: 0 5px;
-      font-size: 11px;
-      font-family: var(--om-font-mono);
-      font-weight: 600;
-      color: var(--om-text-soft);
-      background: var(--om-surface);
-      border: 1px solid var(--om-border);
-      border-bottom-width: 2px;
-      border-radius: 6px;
-    }
-  }
-
-  &-links {
-    display: flex;
-    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 16px;
-
-    a {
-      color: var(--om-text-muted);
-      font-weight: 600;
-      text-decoration: none;
-
-      &:hover { color: var(--om-accent); }
-    }
-
-    span[aria-hidden] { color: var(--om-text-subtle); }
+    gap: 10px;
+    font-size: 13px;
   }
 
-  &-foot {
+  &-link {
+    color: var(--om-text-soft);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 140ms ease;
+
+    &:hover { color: var(--om-accent); }
+  }
+
+  &-divider { color: var(--om-text-subtle); }
+
+  &-fineprint {
+    margin: 0;
     color: var(--om-text-subtle);
     font-size: 11.5px;
+    line-height: 1.5;
   }
 }
 
