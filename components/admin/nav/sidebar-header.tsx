@@ -10,7 +10,7 @@ type AnyUser = {
   role?: string;
 };
 
-export default async function SidebarHeader(props: ServerProps) {
+export default function SidebarHeader(props: ServerProps) {
   const user = (props as { user?: AnyUser | null }).user ?? null;
 
   const env = process.env.VERCEL_ENV ?? process.env.NODE_ENV ?? "development";

@@ -24,6 +24,7 @@ import { SiteSettings } from "./collections/globals/SiteSettings";
 import { AboutPage } from "./collections/globals/AboutPage";
 import { ContactPage } from "./collections/globals/ContactPage";
 import { FeaturesPage } from "./collections/globals/FeaturesPage";
+import { resolveDatabaseUri } from "./lib/env/database-uri";
 import { resolvePublicSiteOrigin } from "./lib/env/site-origin";
 
 const filename = fileURLToPath(import.meta.url);
@@ -73,7 +74,7 @@ export default buildConfig({
   editor: lexicalEditor({}),
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI ?? "",
+      connectionString: resolveDatabaseUri(),
     },
     push: process.env.NODE_ENV !== "production",
     migrationDir: path.resolve(dirname, "migrations"),
