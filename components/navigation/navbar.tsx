@@ -21,17 +21,16 @@ const DEFAULT_NAV: NavItem[] = [
 
 export function Navbar({
   links,
-  cta,
   brandName,
   brandLogoUrl,
 }: {
   links?: NavItem[];
+  /** Accepted for backwards compatibility but no longer rendered. */
   cta?: NavbarCtaLink;
   brandName?: string;
   brandLogoUrl?: string | null;
 } = {}) {
   const navigation: NavItem[] = links && links.length ? links : DEFAULT_NAV;
-  const ctaLink: NavbarCtaLink = cta ?? { label: "Contact us", href: "/contact" };
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -93,20 +92,12 @@ export function Navbar({
             <button
               type="button"
               onClick={() => window.dispatchEvent(new Event("aboutagirl:open-search"))}
-              className="hidden lg:flex items-center justify-center w-10 h-10 rounded-full text-foreground/70 hover:text-foreground hover:bg-stone-100 transition-colors"
+              className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-white text-sm font-semibold rounded-full hover:bg-foreground/90 transition-colors"
               aria-label="Search"
             >
-              <Search className="w-[18px] h-[18px]" />
+              <Search className="w-4 h-4" />
+              <span>Search</span>
             </button>
-
-            {ctaLink && (
-              <Link
-                href={ctaLink.href}
-                className="hidden lg:inline-flex items-center px-5 py-2.5 bg-foreground text-white text-sm font-semibold rounded-full hover:bg-foreground/90 transition-colors"
-              >
-                {ctaLink.label}
-              </Link>
-            )}
 
             <button
               type="button"
@@ -159,27 +150,19 @@ export function Navbar({
                   </li>
                 ))}
               </ul>
-              <div className="mt-4 pt-4 border-t border-stone-100 flex items-center gap-3">
+              <div className="mt-4 pt-4 border-t border-stone-100">
                 <button
                   type="button"
                   onClick={() => {
                     setMobileOpen(false);
                     window.dispatchEvent(new Event("aboutagirl:open-search"));
                   }}
-                  className="flex items-center justify-center w-10 h-10 rounded-full text-foreground/70 hover:bg-stone-100 transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-foreground text-white text-sm font-semibold rounded-xl hover:bg-foreground/90 transition-colors"
                   aria-label="Search"
                 >
-                  <Search className="w-[18px] h-[18px]" />
+                  <Search className="w-4 h-4" />
+                  <span>Search</span>
                 </button>
-                {ctaLink && (
-                  <Link
-                    href={ctaLink.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="ml-auto inline-flex items-center px-5 py-2.5 bg-foreground text-white text-sm font-semibold rounded-full hover:bg-foreground/90 transition-colors"
-                  >
-                    {ctaLink.label}
-                  </Link>
-                )}
               </div>
             </motion.div>
           </>
