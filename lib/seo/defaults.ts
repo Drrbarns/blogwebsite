@@ -29,7 +29,7 @@ export const SITE_DESCRIPTION =
 export const SITE_OG_IMAGE =
   fallback(process.env.NEXT_PUBLIC_OG_IMAGE) || "/images/og-default.svg";
 
-export const SITE_LOGO = "/images/logo.svg";
+export const SITE_LOGO = "/images/logo.png";
 
 export const siteDefaults = {
   name: SITE_NAME,

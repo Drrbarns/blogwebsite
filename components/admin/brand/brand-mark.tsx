@@ -6,6 +6,11 @@ interface Props {
   animated?: boolean;
 }
 
+/**
+ * The "About a Girl" mark, rendered as an <img> rather than next/image so
+ * that it works inside Payload's React Server Components admin tree
+ * (which is rendered outside Next's image optimization pipeline).
+ */
 export function BrandMark({ size = 36, className, animated = false }: Props) {
   return (
     <span
@@ -13,25 +18,19 @@ export function BrandMark({ size = 36, className, animated = false }: Props) {
       style={{ width: size, height: size }}
       aria-hidden
     >
-      <svg viewBox="0 0 64 64" width={size} height={size} fill="none">
-        <rect
-          x="2"
-          y="2"
-          width="60"
-          height="60"
-          rx="14"
-          fill="#1a1a1a"
-        />
-        <path
-          d="M22 20 L22 44 M22 20 L34 20 C40 20 44 24 44 30 C44 36 40 40 34 40 L26 40 M30 40 L44 44"
-          stroke="#fafaf9"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <circle cx="50" cy="14" r="3.2" fill="#ea580c" />
-      </svg>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/logo.png"
+        alt=""
+        width={size}
+        height={size}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+          display: "block",
+        }}
+      />
     </span>
   );
 }

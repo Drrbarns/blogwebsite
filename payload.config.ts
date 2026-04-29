@@ -46,7 +46,7 @@ export default buildConfig({
       titleSuffix: " — About a Girl",
       description:
         "Writing studio for About a Girl — faith, sport, medicine and life, one entry at a time.",
-      icons: [{ rel: "icon", url: "/favicon.ico" }],
+      icons: [{ rel: "icon", type: "image/png", url: "/icon.png" }],
     },
     components: {
       graphics: {
