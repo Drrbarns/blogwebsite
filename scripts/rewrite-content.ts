@@ -8,10 +8,13 @@
  * categories: Faith, Sport, Medicine, Life, Reflections, Journal.
  *
  * Safe to re-run — the script deletes existing categories/tags/posts and
- * recreates them from the in-script POSTS array. Cover images are fetched
- * from Unsplash; if a fetch fails the post falls back to whatever cover
- * the original record already had.
+ * recreates them from the in-script POSTS array. Cover images are read from
+ * `public/images/blog/` (see `COVER` in this file) and uploaded to the Media
+ * collection; remote URLs are still supported.
  */
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import { Buffer } from "node:buffer";
 import type { getPayload as GetPayloadFn } from "payload";
 
@@ -69,6 +72,16 @@ const TAGS: Array<{ slug: string; name: string }> = [
   { slug: "letter-to-self", name: "Letter to self" },
   { slug: "presence", name: "Presence" },
 ];
+
+/** Bundled editorial covers — copied into `public/images/blog/`. */
+const COVER = {
+  worship: "local:public/images/blog/cover-worship.png",
+  sportCycling: "local:public/images/blog/cover-sport-cycling-ghana.png",
+  sportFootball: "local:public/images/blog/cover-sport-football-ghana.png",
+  medicineHospital: "local:public/images/blog/cover-medicine-hospital.png",
+  medicineClass: "local:public/images/blog/cover-medicine-class.png",
+  lifeMarket: "local:public/images/blog/cover-life-makola-market.png",
+} as const;
 
 // ────────────────────────────────────────────────────────────────────────────
 //  Lexical helpers — produce the AST shape Payload's lexical editor expects
@@ -205,8 +218,7 @@ const POSTS: PostSpec[] = [
       "The most honest prayers I pray happen in the empty hospital car park at 6 a.m., still in scrubs. Here's what those quiet hours have taught me about faith, exhaustion, and the God who sits with tired women.",
     category: "faith",
     tags: ["prayer", "resident-life", "solitude", "devotion"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1490127252417-7c393f993ee4?auto=format&w=1600&q=80",
+    coverUrl: COVER.worship,
     publishedAt: "2026-04-26T06:30:00.000Z",
     featured: true,
     content: lex(
@@ -295,8 +307,7 @@ const POSTS: PostSpec[] = [
       "Forget the Pinterest morning routine. Here is a real, working ten-minute devotion built for ward rounds, night shifts, and the kind of week where you forget what day it is. Practical, biblical, and unapologetically small.",
     category: "faith",
     tags: ["devotion", "scripture", "habits", "resident-life"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&w=1600&q=80",
+    coverUrl: COVER.worship,
     publishedAt: "2026-04-22T07:00:00.000Z",
     content: lex(
       ps(
@@ -383,8 +394,7 @@ const POSTS: PostSpec[] = [
       "Bedside manner is not a soft skill. It is a theological act. Every patient I see bears the image of God, and how I touch, listen and explain says something about what I believe about Him. Here is what faith has done to my hands.",
     category: "faith",
     tags: ["patient-care", "presence", "scripture", "identity"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&w=1600&q=80",
+    coverUrl: COVER.medicineHospital,
     publishedAt: "2026-04-19T08:00:00.000Z",
     content: lex(
       ps(
@@ -470,8 +480,7 @@ const POSTS: PostSpec[] = [
       "I believe in miracles. I also believe in chest compressions. Most days the gospel and the guidelines are not in conflict — they hold hands. A short essay on faith inside a resus bay.",
     category: "faith",
     tags: ["prayer", "patient-care", "scripture", "presence"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&w=1600&q=80",
+    coverUrl: COVER.worship,
     publishedAt: "2026-04-15T09:00:00.000Z",
     content: lex(
       ps(
@@ -542,8 +551,7 @@ const POSTS: PostSpec[] = [
       "I am not a morning person. I am not a natural athlete. But the 5 a.m. run is the load-bearing wall of my week. Here is the case for a small, stubborn habit that has held me together through internship, heartbreak and humid Accra summers.",
     category: "sport",
     tags: ["running", "discipline", "habits", "mental-health"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&w=1600&q=80",
+    coverUrl: COVER.sportCycling,
     publishedAt: "2026-04-12T05:30:00.000Z",
     featured: true,
     content: lex(
@@ -634,8 +642,7 @@ const POSTS: PostSpec[] = [
       "I do not lift to look a particular way. I lift because I want to still be picking up grandchildren when I am seventy. Here is a calm, evidence-led case for why every woman — especially the busy ones — needs to be lifting heavy things.",
     category: "sport",
     tags: ["strength-training", "discipline", "habits", "patient-care"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&w=1600&q=80",
+    coverUrl: COVER.sportFootball,
     publishedAt: "2026-04-08T07:00:00.000Z",
     content: lex(
       ps(
@@ -737,8 +744,7 @@ const POSTS: PostSpec[] = [
       "Distance running is the cheapest therapist I have. After a year of building from 5 km to a half marathon, I have a small notebook of things the long run has taught me about the body, the mind, and the slow grace of going on.",
     category: "sport",
     tags: ["running", "discipline", "patience", "mental-health"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?auto=format&w=1600&q=80",
+    coverUrl: COVER.sportCycling,
     publishedAt: "2026-04-04T06:00:00.000Z",
     content: lex(
       ps(
@@ -821,8 +827,7 @@ const POSTS: PostSpec[] = [
       "Six years of training and you still arrive at internship knowing very little about how to actually do this job. Here is the unofficial curriculum I wish someone had handed me on day one — paperwork, hierarchy, food, sleep and the small dignities that keep a junior doctor alive.",
     category: "medicine",
     tags: ["resident-life", "patient-care", "habits", "letter-to-self"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&w=1600&q=80",
+    coverUrl: COVER.medicineClass,
     publishedAt: "2026-04-01T08:00:00.000Z",
     content: lex(
       ps(
@@ -918,8 +923,7 @@ const POSTS: PostSpec[] = [
       "Telling a family that their loved one will not survive is the hardest sentence in medicine. There is a framework, but there is also an art. After two years of doing this badly, then less badly, then occasionally well — here is what I have learned.",
     category: "medicine",
     tags: ["patient-care", "presence", "boundaries", "scripture"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&w=1600&q=80",
+    coverUrl: COVER.medicineHospital,
     publishedAt: "2026-03-28T09:00:00.000Z",
     content: lex(
       ps(
@@ -1011,8 +1015,7 @@ const POSTS: PostSpec[] = [
       "Eighty per cent of diagnoses are made in the first five minutes of a patient interview — if you actually listen. Here is how I am training myself to be quieter, more curious, and more useful in the consultation room.",
     category: "medicine",
     tags: ["patient-care", "presence", "habits", "discipline"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&w=1600&q=80",
+    coverUrl: COVER.medicineHospital,
     publishedAt: "2026-03-24T08:00:00.000Z",
     content: lex(
       ps(
@@ -1109,8 +1112,7 @@ const POSTS: PostSpec[] = [
       "Burnout is not a failure of character. It is the predictable injury of a profession that has not yet learned to protect its workers. Here is what I have learned about saying no, recovering well, and continuing to love the work without being destroyed by it.",
     category: "medicine",
     tags: ["burnout", "boundaries", "mental-health", "resident-life"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1579165466741-7f35e4755183?auto=format&w=1600&q=80",
+    coverUrl: COVER.medicineClass,
     publishedAt: "2026-03-19T07:30:00.000Z",
     content: lex(
       ps(
@@ -1208,8 +1210,7 @@ const POSTS: PostSpec[] = [
       "I live alone, work fifty-six hours a week, and still cook real food most nights. Here is the small, repeatable system that keeps me out of takeaway containers without taking my Sundays hostage.",
     category: "life",
     tags: ["cooking", "habits", "discipline", "solitude"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&w=1600&q=80",
+    coverUrl: COVER.lifeMarket,
     publishedAt: "2026-03-15T18:00:00.000Z",
     content: lex(
       ps(
@@ -1306,8 +1307,7 @@ const POSTS: PostSpec[] = [
       "The friendships you have at twenty-eight will not survive on the autopilot that sustained the friendships you had at eighteen. Here is what I have learned about keeping the long ones alive, building the new ones, and grieving the ones that are quietly leaving.",
     category: "life",
     tags: ["friendship", "habits", "identity", "presence"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&w=1600&q=80",
+    coverUrl: COVER.lifeMarket,
     publishedAt: "2026-03-09T19:00:00.000Z",
     content: lex(
       ps(
@@ -1409,8 +1409,7 @@ const POSTS: PostSpec[] = [
       "A letter to the version of me who walked into anatomy lab eight years ago, carrying too much fear and too little grace. Things I wish she had known about medicine, faith, the body, the men, and the slow work of becoming a doctor and a woman.",
     category: "reflections",
     tags: ["letter-to-self", "identity", "habits", "scripture"],
-    coverUrl:
-      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&w=1600&q=80",
+    coverUrl: COVER.medicineClass,
     publishedAt: "2026-03-04T20:00:00.000Z",
     content: lex(
       ps(
@@ -1570,13 +1569,35 @@ async function uploadCover(
   alt: string,
 ): Promise<ID | null> {
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`fetch ${url} → ${res.status}`);
-    const arrayBuffer = await res.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const mimeType = res.headers.get("content-type") ?? "image/jpeg";
+    let buffer: Buffer;
+    let mimeType: string;
+    let ext: string;
+
+    if (url.startsWith("local:")) {
+      const rel = url.slice("local:".length).replace(/^\//, "");
+      const fullPath = join(process.cwd(), rel);
+      buffer = readFileSync(fullPath);
+      if (/\.png$/i.test(fullPath)) {
+        mimeType = "image/png";
+        ext = "png";
+      } else if (/\.jpe?g$/i.test(fullPath)) {
+        mimeType = "image/jpeg";
+        ext = "jpg";
+      } else {
+        mimeType = "application/octet-stream";
+        ext = "bin";
+      }
+    } else {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`fetch ${url} → ${res.status}`);
+      const arrayBuffer = await res.arrayBuffer();
+      buffer = Buffer.from(arrayBuffer);
+      mimeType = res.headers.get("content-type") ?? "image/jpeg";
+      ext = mimeType.includes("png") ? "png" : "jpg";
+    }
+
     const safeAlt = alt.replace(/[^a-zA-Z0-9]+/g, "-").toLowerCase().slice(0, 60);
-    const filename = `${safeAlt}-${Date.now()}.jpg`;
+    const filename = `${safeAlt}-${Date.now()}.${ext}`;
 
     const doc = await payload.create({
       collection: "media",

@@ -15,38 +15,23 @@ const author = {
 };
 
 /**
- * Stable, hand-picked Unsplash images. Stored at the top so we can re-use the
- * same cover in different listing positions without copy-pasting URLs.
+ * Cover art bundled under public/images/blog (see scripts/rewrite-content.ts COVER map).
  */
 const cover = {
-  flagshipJournal:
-    "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1600&h=1000&fit=crop&q=80",
-  prayingHands:
-    "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1600&h=1000&fit=crop&q=80",
-  sundayLight:
-    "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=1600&h=1000&fit=crop&q=80",
-  hospitalNight:
-    "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=1600&h=1000&fit=crop&q=80",
-  bibleCoffee:
-    "https://images.unsplash.com/photo-1499728603263-13726abce5fd?w=1600&h=1000&fit=crop&q=80",
-  weights:
-    "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1600&h=1000&fit=crop&q=80",
-  runningRoad:
-    "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=1600&h=1000&fit=crop&q=80",
-  homeGym:
-    "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&h=1000&fit=crop&q=80",
-  stethoscope:
-    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&h=1000&fit=crop&q=80",
-  doctorPatient:
-    "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=1600&h=1000&fit=crop&q=80",
-  burnoutCoat:
-    "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1600&h=1000&fit=crop&q=80",
-  booksStack:
-    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1600&h=1000&fit=crop&q=80",
-  windowJournal:
-    "https://images.unsplash.com/photo-1517842645767-c639042777db?w=1600&h=1000&fit=crop&q=80",
-  womanDawn:
-    "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&h=1000&fit=crop&q=80",
+  flagshipJournal: "/images/blog/cover-life-makola-market.png",
+  prayingHands: "/images/blog/cover-worship.png",
+  sundayLight: "/images/blog/cover-worship.png",
+  hospitalNight: "/images/blog/cover-worship.png",
+  bibleCoffee: "/images/blog/cover-worship.png",
+  weights: "/images/blog/cover-sport-football-ghana.png",
+  runningRoad: "/images/blog/cover-sport-cycling-ghana.png",
+  homeGym: "/images/blog/cover-sport-football-ghana.png",
+  stethoscope: "/images/blog/cover-medicine-hospital.png",
+  doctorPatient: "/images/blog/cover-medicine-hospital.png",
+  burnoutCoat: "/images/blog/cover-medicine-class.png",
+  booksStack: "/images/blog/cover-medicine-class.png",
+  windowJournal: "/images/blog/cover-medicine-class.png",
+  womanDawn: "/images/blog/cover-life-makola-market.png",
 };
 
 const cat = {

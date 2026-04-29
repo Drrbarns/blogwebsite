@@ -1,10 +1,12 @@
 /**
- * One-shot script to insert the single missing "burnout" post that the main
- * rewrite-content run could not create because its Unsplash cover 404'd.
+ * One-shot script to insert the single missing "burnout" post if a past
+ * rewrite run failed on cover upload. Uses the bundled PNG under public/.
  *
  *   npm run insert-burnout-post
  */
 import { Buffer } from "node:buffer";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import type { getPayload as GetPayloadFn } from "payload";
 
 if (process.env.DATABASE_URI) {
@@ -20,14 +22,10 @@ type ID = string | number;
 
 const log = (...a: unknown[]) => console.log("[burnout]", ...a);
 
-const COVER_URL =
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&w=1600&q=80";
+/** Same asset as scripts/rewrite-content.ts COVER.medicineClass */
+const COVER_URL = "local:public/images/blog/cover-medicine-class.png";
 
-const FALLBACK_COVERS = [
-  "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&w=1600&q=80",
-  "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&w=1600&q=80",
-  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&w=1600&q=80",
-];
+const FALLBACK_COVERS: string[] = [];
 
 const FMT_BOLD = 1;
 
@@ -199,15 +197,38 @@ const content = {
 
 async function uploadCover(payload: PayloadInstance, url: string, alt: string): Promise<ID | null> {
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`fetch ${url} → ${res.status}`);
-    const buffer = Buffer.from(await res.arrayBuffer());
-    const mime = res.headers.get("content-type") ?? "image/jpeg";
-    const filename = `burnout-cover-${Date.now()}.jpg`;
+    let buffer: Buffer;
+    let mimeType: string;
+    let ext: string;
+
+    if (url.startsWith("local:")) {
+      const rel = url.slice("local:".length).replace(/^\//, "");
+      const fullPath = join(process.cwd(), rel);
+      buffer = readFileSync(fullPath);
+      if (/\.png$/i.test(fullPath)) {
+        mimeType = "image/png";
+        ext = "png";
+      } else if (/\.jpe?g$/i.test(fullPath)) {
+        mimeType = "image/jpeg";
+        ext = "jpg";
+      } else {
+        mimeType = "application/octet-stream";
+        ext = "bin";
+      }
+    } else {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`fetch ${url} → ${res.status}`);
+      buffer = Buffer.from(await res.arrayBuffer());
+      mimeType = res.headers.get("content-type") ?? "image/jpeg";
+      ext = mimeType.includes("png") ? "png" : "jpg";
+    }
+
+    const safeAlt = alt.replace(/[^a-zA-Z0-9]+/g, "-").toLowerCase().slice(0, 60);
+    const filename = `${safeAlt}-${Date.now()}.${ext}`;
     const doc = await payload.create({
       collection: "media",
       data: { alt },
-      file: { data: buffer, mimetype: mime, name: filename, size: buffer.length },
+      file: { data: buffer, mimetype: mimeType, name: filename, size: buffer.length },
       overrideAccess: true,
     });
     return (doc as { id: ID }).id;
