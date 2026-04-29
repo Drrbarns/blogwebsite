@@ -779,146 +779,267 @@ label {
 
 /* ============================================================== *
  * SIDEBAR HEADER + FOOTER (custom slots)
+ *
+ * The matching React components live in
+ *   components/admin/nav/sidebar-header.tsx
+ *   components/admin/nav/sidebar-footer.tsx
+ * and emit `.om-sidehead` / `.om-sidefoot` blocks (no hyphen between
+ * "side" and "head/foot").  These rules give them air, alignment and a
+ * proper visual rhythm — without them the header collapses to runs of
+ * inline spans like "About a GirlWriting studio".
  * ============================================================== */
 
-.om-side-head {
+/* ── Sidebar header ────────────────────────────────────────────── */
+.om-sidehead {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   padding: 18px 14px 16px;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   border-bottom: 1px solid var(--om-border);
 
   &__brand {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 6px 10px;
+    padding: 10px 12px;
     border-radius: var(--om-radius-md);
     background: var(--om-surface-soft);
     border: 1px solid var(--om-border);
   }
 
-  &__name {
+  &__brand-text {
     display: flex;
     flex-direction: column;
-    line-height: 1.1;
-
-    strong {
-      font-family: var(--om-font-display);
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--om-text);
-      letter-spacing: -0.015em;
-    }
-    span {
-      font-size: 10.5px;
-      letter-spacing: 0.16em;
-      color: var(--om-text-muted);
-      text-transform: uppercase;
-      margin-top: 2px;
-      font-weight: 600;
-    }
+    min-width: 0;
+    line-height: 1.15;
   }
 
-  &__meta {
+  &__brand-name {
+    font-family: var(--om-font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--om-text);
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__brand-sub {
+    margin-top: 3px;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--om-text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  &__row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 12px;
+    justify-content: space-between;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
-  &__chip {
+  &__env {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 3px 9px;
+    padding: 4px 10px;
     border-radius: var(--om-radius-full);
     font-size: 11px;
     font-weight: 600;
-    background: var(--om-success-bg);
-    color: var(--om-success);
+    background: var(--om-surface-soft);
+    color: var(--om-text-soft);
+    border: 1px solid var(--om-border);
+    white-space: nowrap;
 
-    &--accent {
+    &--production {
+      background: var(--om-success-bg);
+      color: var(--om-success);
+      border-color: transparent;
+    }
+    &--preview {
       background: var(--om-accent-bg);
       color: var(--om-accent);
-    }
-
-    &--neutral {
-      background: var(--om-surface-soft);
-      color: var(--om-text-soft);
-      border: 1px solid var(--om-border);
+      border-color: transparent;
     }
   }
 
-  &__kbd {
-    margin-top: 12px;
-    display: flex;
+  &__env-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: currentColor;
+    box-shadow: 0 0 0 3px color-mix(in oklab, currentColor 15%, transparent);
+  }
+
+  &__user {
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 12px;
+    min-width: 0;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  &__avatar {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--om-accent);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  &__user-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.2;
+
+    strong {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--om-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 130px;
+    }
+    span {
+      margin-top: 1px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--om-text-muted);
+    }
+  }
+
+  &__hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
     background: var(--om-surface-soft);
     border: 1px solid var(--om-border);
     border-radius: var(--om-radius-sm);
     font-size: 11.5px;
     color: var(--om-text-muted);
     font-weight: 500;
+  }
 
-    kbd {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 18px;
-      height: 18px;
-      padding: 0 5px;
-      font-family: var(--om-font-mono);
-      font-size: 10.5px;
-      font-weight: 600;
-      color: var(--om-text);
-      background: var(--om-surface);
-      border: 1px solid var(--om-border);
-      border-bottom-width: 2px;
-      border-radius: 5px;
-    }
+  &__hint-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    font-family: var(--om-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--om-text);
+    background: var(--om-surface);
+    border: 1px solid var(--om-border);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+  }
+
+  &__hint-text {
+    margin-left: 4px;
   }
 }
 
-.om-side-foot {
-  margin-top: 12px;
-  padding: 14px;
-  border-top: 1px solid var(--om-border);
+/* ── Sidebar footer ────────────────────────────────────────────── */
+.om-sidefoot {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--om-text-muted);
+  gap: 12px;
+  margin-top: 12px;
+  padding: 14px 12px 16px;
+  border-top: 1px solid var(--om-border);
 
-  &__row {
+  &__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    li {
+      list-style: none;
+    }
+  }
+
+  &__link {
     display: flex;
     align-items: center;
     gap: 10px;
+    padding: 7px 10px;
+    border-radius: var(--om-radius-sm);
+    font-size: 12.5px;
+    font-weight: 500;
     color: var(--om-text-soft);
     text-decoration: none;
-    padding: 6px 8px;
-    border-radius: var(--om-radius-sm);
-    font-weight: 500;
     transition: background 140ms ease, color 140ms ease;
 
     &:hover {
       background: var(--om-surface-soft);
       color: var(--om-text);
+      text-decoration: none;
     }
   }
 
-  &__brand {
-    margin-top: 6px;
-    padding-top: 10px;
+  &__link-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--om-radius-sm);
+    background: var(--om-surface-soft);
+    border: 1px solid var(--om-border);
+    font-size: 11px;
+    color: var(--om-text-muted);
+    line-height: 1;
+  }
+
+  &__build {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 4px;
+    padding-top: 12px;
     border-top: 1px dashed var(--om-border);
     color: var(--om-text-subtle);
     font-size: 11px;
+    line-height: 1.45;
+  }
 
-    strong {
-      color: var(--om-text);
-      font-weight: 700;
-    }
+  &__build-name {
+    color: var(--om-text);
+    font-weight: 600;
+    font-size: 11.5px;
+    letter-spacing: -0.005em;
+  }
+
+  &__build-meta {
+    color: var(--om-text-subtle);
+    font-family: var(--om-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
   }
 }
 
