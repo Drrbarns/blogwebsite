@@ -81,7 +81,7 @@ const probe = async (url: string): Promise<ProbeResult> => {
       method: "HEAD",
       redirect: "manual",
       signal: controller.signal,
-      headers: { "user-agent": "Ontario-LinkChecker/1.0" },
+      headers: { "user-agent": "AboutAGirl-LinkChecker/1.0" },
     });
     clearTimeout(t);
     const ms = Date.now() - start;

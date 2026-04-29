@@ -40,7 +40,7 @@ export async function SiteFooter() {
     }));
 
   const brandName =
-    settings?.brand?.name ?? nav?.brand?.label ?? "Ontario";
+    settings?.brand?.name ?? nav?.brand?.label ?? "About a Girl";
   const brandLogo = pickMediaUrlOrNull(
     settings?.brand?.logo as never,
     "thumbnail",

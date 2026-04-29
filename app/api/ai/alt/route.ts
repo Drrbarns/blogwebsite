@@ -3,8 +3,9 @@ import { NextResponse, type NextRequest } from "next/server";
 export const runtime = "nodejs";
 
 /**
- * On-demand alt-text generator.  Admin UI calls this with an image URL
- * (from the Media doc) when the editor clicks "Generate alt with AI".
+ * On-demand alt-text generator powered by Groq vision (Llama 4 Scout).
+ * Admin UI calls this with an image URL (from the Media doc) when the
+ * editor clicks "Generate alt with AI".
  */
 export async function POST(req: NextRequest) {
   try {
@@ -12,32 +13,34 @@ export async function POST(req: NextRequest) {
     if (!imageUrl) {
       return NextResponse.json({ error: "imageUrl required" }, { status: 400 });
     }
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.GROQ_API_KEY) {
       return NextResponse.json(
-        { error: "OPENAI_API_KEY not configured" },
+        { error: "GROQ_API_KEY not configured" },
         { status: 501 },
       );
     }
 
-    const { default: OpenAI } = await import("openai");
-    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const { default: Groq } = await import("groq-sdk");
+    const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
     const response = await client.chat.completions.create({
-      model: process.env.OPENAI_VISION_MODEL ?? "gpt-4o-mini",
+      model:
+        process.env.GROQ_VISION_MODEL ??
+        "meta-llama/llama-4-scout-17b-16e-instruct",
       messages: [
-        {
-          role: "system",
-          content:
-            "You write concise, SEO-friendly alt text. Respond with ONLY the alt text, 8-16 words, no quotes, no period.",
-        },
         {
           role: "user",
           content: [
-            { type: "text", text: "Write accessible alt text for this image." },
+            {
+              type: "text",
+              text:
+                "Write concise, SEO-friendly alt text for this image (8–16 words). " +
+                "Respond with ONLY the alt text — no quotes, no period, no prefix like 'Image of'.",
+            },
             { type: "image_url", image_url: { url: imageUrl } },
           ],
         },
       ],
-      max_tokens: 80,
+      max_completion_tokens: 80,
       temperature: 0.3,
     });
 

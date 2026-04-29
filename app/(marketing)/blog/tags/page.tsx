@@ -6,7 +6,7 @@ export const revalidate = 300;
 
 export const metadata = generatePageMetadata({
   title: "Browse by tag",
-  description: "A tag cloud of every topic mentioned in the Ontario archive.",
+  description: "A tag cloud of every theme touched on across About a Girl — faith, sport, medicine and life.",
   path: "/blog/tags",
 });
 

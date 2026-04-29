@@ -22,7 +22,7 @@ export default function LoginAfter() {
           target="_blank"
           rel="noreferrer"
         >
-          <span aria-hidden>↗</span> View live site
+          <span aria-hidden>↗</span> View the blog
         </a>
         <span className="om-login__after-divider" aria-hidden>
           ·
@@ -33,18 +33,18 @@ export default function LoginAfter() {
           target="_blank"
           rel="noreferrer"
         >
-          Editorial handbook
+          Studio handbook
         </a>
         <span className="om-login__after-divider" aria-hidden>
           ·
         </span>
-        <a className="om-login__after-link" href="mailto:editors@ontario.cms">
+        <a className="om-login__after-link" href="mailto:hello@aboutagirl.blog">
           Get help
         </a>
       </div>
 
       <p className="om-login__after-fineprint">
-        © {year} Ontario · Secure session, encrypted at rest{SHA ? ` · build ${SHA}` : ""}.
+        © {year} About a Girl · Secure session, encrypted at rest{SHA ? ` · build ${SHA}` : ""}.
       </p>
     </div>
   );

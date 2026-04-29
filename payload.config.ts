@@ -42,10 +42,10 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     meta: {
-      title: "Ontario CMS",
-      titleSuffix: " — Ontario CMS",
+      title: "About a Girl · Studio",
+      titleSuffix: " — About a Girl",
       description:
-        "Editorial workspace for the Ontario blog — write, schedule and ship.",
+        "Writing studio for About a Girl — faith, sport, medicine and life, one entry at a time.",
       icons: [{ rel: "icon", url: "/favicon.ico" }],
     },
     components: {
@@ -107,7 +107,7 @@ export default buildConfig({
       collections: ["posts", "pages"],
       uploadsCollection: "media",
       generateTitle: ({ doc }) =>
-        `${(doc as { title?: string }).title ?? "Untitled"} — Ontario`,
+        `${(doc as { title?: string }).title ?? "Untitled"} — About a Girl`,
       generateDescription: ({ doc }) =>
         (doc as { excerpt?: string }).excerpt ?? "",
       generateURL: ({ doc, collectionSlug }) => {

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
- * Ontario CMS — admin design system (LIGHT, EDITORIAL)
+ * About a Girl · Studio — admin design system (LIGHT, EDITORIAL)
  * Mirrors the marketing site: warm stone palette, orange accent,
  * Plus Jakarta + DM Sans, white cards, soft shadows, generous
  * whitespace. Lives on top of Payload's defaults.
@@ -833,6 +833,51 @@ label {
       font-weight: 600;
       color: var(--om-text);
     }
+  }
+
+  &__separator {
+    width: 1px;
+    height: 16px;
+    background: var(--om-border);
+  }
+
+  &__crumb {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1.1;
+    gap: 2px;
+
+    &-label {
+      font-size: 9.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--om-text-subtle);
+      font-weight: 700;
+    }
+    &-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--om-text);
+    }
+  }
+
+  &__sha {
+    font-family: var(--om-font-mono);
+    font-size: 11px;
+    color: var(--om-text-subtle);
+    padding: 3px 8px;
+    background: var(--om-surface-soft);
+    border: 1px solid var(--om-border);
+    border-radius: 6px;
+  }
+
+  &__spacer { flex: 1; }
+
+  &__pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
   }
 
   &__build {

@@ -52,7 +52,7 @@ export default function SidebarFooter() {
         ))}
       </ul>
       <div className="om-sidefoot__build">
-        <span className="om-sidefoot__build-name">Ontario CMS</span>
+        <span className="om-sidefoot__build-name">About a Girl · Studio</span>
         <span className="om-sidefoot__build-meta">
           v1.0
           {BUILD_SHA ? ` · ${BUILD_SHA}` : ""}

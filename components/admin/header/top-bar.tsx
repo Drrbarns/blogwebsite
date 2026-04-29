@@ -19,8 +19,8 @@ export default function TopBar() {
       <span className="om-topbar__separator" aria-hidden />
 
       <span className="om-topbar__crumb">
-        <span className="om-topbar__crumb-label">Workspace</span>
-        <span className="om-topbar__crumb-value">Ontario · Editorial</span>
+        <span className="om-topbar__crumb-label">Studio</span>
+        <span className="om-topbar__crumb-value">About a Girl</span>
       </span>
 
       {sha && (

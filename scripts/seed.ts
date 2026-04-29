@@ -63,7 +63,7 @@ async function upsertUser(payload: PayloadInstance) {
     data: {
       email: ADMIN_EMAIL,
       password: ADMIN_PASSWORD,
-      name: "Editorial Admin",
+      name: "About a Girl",
       roles: ["admin"],
     },
   });
@@ -374,7 +374,7 @@ async function seedGlobals(payload: PayloadInstance) {
   await safeUpdateGlobal(payload, "site-settings", {
     brand: {
       name: siteConfig.name,
-      tagline: "Stories worth your inbox.",
+      tagline: "Faith. Sport. Medicine. Life in between.",
       description: siteConfig.description,
     },
     seo: {
@@ -383,7 +383,7 @@ async function seedGlobals(payload: PayloadInstance) {
       defaultDescription: siteConfig.description,
       twitter: siteConfig.links.twitter
         ? `@${siteConfig.links.twitter.split("/").pop()}`
-        : "@ontariomag",
+        : "@aboutagirl",
     },
     contact: {
       email: siteConfig.contact.email,
@@ -393,7 +393,7 @@ async function seedGlobals(payload: PayloadInstance) {
   });
 
   await safeUpdateGlobal(payload, "navigation", {
-    brand: { label: siteConfig.name, tagline: "Editorial. Crafted." },
+    brand: { label: siteConfig.name, tagline: "A girl with many sides." },
     primary: [
       { label: "Home", type: "custom", url: "/" },
       { label: "Blog", type: "custom", url: "/blog" },

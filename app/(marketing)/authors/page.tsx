@@ -8,7 +8,7 @@ export const revalidate = 300;
 
 export const metadata = generatePageMetadata({
   title: "Authors",
-  description: "Meet the editorial team behind Ontario.",
+  description: "Meet the voices behind About a Girl.",
   path: "/authors",
 });
 
@@ -19,13 +19,13 @@ export default async function AuthorsPage() {
       <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
         <div className="max-w-2xl mb-14">
           <div className="text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-3">
-            The team
+            The voices
           </div>
           <h1 className="font-display text-4xl md:text-6xl font-extrabold tracking-tight">
-            Our authors
+            Bylines
           </h1>
           <p className="text-lg md:text-xl text-muted mt-5">
-            Designers, writers and strategists publishing on Ontario.
+            The doctor, the friends and the occasional guest writer publishing on About a Girl.
           </p>
         </div>
         {authors.length === 0 ? (

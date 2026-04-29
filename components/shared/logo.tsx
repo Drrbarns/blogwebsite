@@ -11,7 +11,7 @@ interface LogoProps {
 }
 
 export function Logo({
-  name = "ONTARIO",
+  name = "About a Girl",
   href = "/",
   imageUrl,
   imageAlt,

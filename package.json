@@ -13,7 +13,8 @@
     "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
     "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/seed.ts",
-    "create-admin": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/create-admin.ts"
+    "create-admin": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/create-admin.ts",
+    "update-brand": "cross-env NODE_OPTIONS=--no-deprecation DOTENV_CONFIG_PATH=.env.local tsx --import dotenv/config scripts/update-brand.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.84.1",
@@ -29,10 +30,10 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "graphql": "^16.13.2",
+    "groq-sdk": "^1.1.2",
     "lucide-react": "^1.8.0",
     "next": "16.2.4",
     "next-themes": "^0.4.6",
-    "openai": "^6.34.0",
     "payload": "^3.84.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",

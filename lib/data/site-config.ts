@@ -1,10 +1,10 @@
 import type { SiteConfig, NavItem } from "@/types";
 
 export const siteConfig: SiteConfig = {
-  name: "ONTARIO",
+  name: "About a Girl",
   description:
-    "Welcome to the ONTARIO Blog WordPress Theme – your space for fresh ideas, insightful stories, and practical tips. Whether you're looking to learn something new, spark inspiration, or simply enjoy thoughtful reading, you've come to the right place.",
-  url: "https://ontariowp.com",
+    "About a Girl is a personal blog about the many facets of one woman — faith, sport, medicine and the in-between. Notes from a doctor on calling, training, scrubs, scripture and the small habits that make a life.",
+  url: "https://aboutagirl.blog",
   ogImage: "/images/og-default.jpg",
   links: {
     facebook: "https://facebook.com",
@@ -14,9 +14,9 @@ export const siteConfig: SiteConfig = {
     youtube: "https://youtube.com",
   },
   contact: {
-    address: "27 Division St, New York, NY 10002, United States",
-    email: "hello@mysite.com",
-    phone: "8 800 2345 234",
+    address: "On call · somewhere in West Africa",
+    email: "hello@aboutagirl.blog",
+    phone: "",
   },
 };
 
@@ -29,10 +29,10 @@ export const navigation: NavItem[] = [
 ];
 
 export const footerCategories = [
-  { name: "Digital", slug: "digital" },
-  { name: "Business", slug: "business" },
-  { name: "Startups", slug: "startups" },
-  { name: "Trends", slug: "trends" },
-  { name: "Crypto", slug: "crypto" },
-  { name: "News", slug: "news" },
+  { name: "Faith", slug: "faith" },
+  { name: "Sport", slug: "sport" },
+  { name: "Medicine", slug: "medicine" },
+  { name: "Life", slug: "life" },
+  { name: "Reflections", slug: "reflections" },
+  { name: "Journal", slug: "journal" },
 ];

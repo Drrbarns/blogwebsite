@@ -2,32 +2,32 @@ import Link from "next/link";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata = generatePageMetadata({
-  title: "The Ontario Dispatch — Newsletter",
+  title: "Letters from About a Girl — Newsletter",
   description:
-    "One email every Tuesday. The best new essays, interviews and product tear-downs, hand-picked by our editors.",
+    "One quiet email every Sunday. New essays on faith, sport and medicine, plus the small things keeping me steady that week.",
   path: "/newsletter",
 });
 
 const perks = [
   {
-    title: "Tuesday-only cadence",
+    title: "Sunday-only cadence",
     description:
-      "No endless drip campaigns. You’ll hear from us once a week — curated, short and useful.",
+      "No drip campaigns, no funnels. One thoughtful letter at the start of the week — that's the whole deal.",
   },
   {
     title: "Essays before anyone else",
     description:
-      "Subscribers receive new long-reads 48 hours before they hit the public feed.",
+      "Subscribers receive new long-reads 48 hours before they go up on the blog.",
   },
   {
-    title: "Creator-only perks",
+    title: "Behind the white coat",
     description:
-      "Invitations to live critiques, subscriber Q&As and the occasional Figma/Notion template.",
+      "Notes from the ward, training plans I'm running, and the prayers that fit between rounds.",
   },
   {
     title: "Unsubscribe in one click",
     description:
-      "Every email has a single-click opt-out. We’ll never share or sell your address.",
+      "Every email has a single-click opt-out. Your address stays here, between us.",
   },
 ];
 
@@ -37,15 +37,14 @@ export default function NewsletterLanding() {
       <section className="pt-32 md:pt-40 pb-20">
         <div className="max-w-[1080px] mx-auto px-4 lg:px-8 text-center">
           <div className="text-sm font-semibold uppercase tracking-[0.2em] text-accent mb-4">
-            The Ontario Dispatch
+            Letters from About a Girl
           </div>
           <h1 className="font-display text-5xl md:text-7xl font-extrabold tracking-tight">
-            The smartest read in your inbox on Tuesdays.
+            A quiet letter in your inbox every Sunday.
           </h1>
           <p className="text-lg md:text-xl text-muted mt-6 max-w-2xl mx-auto">
-            A hand-built weekly digest of the most interesting essays, interviews and
-            products shaping design, tech and modern work.  2 minutes to read.
-            Zero fluff.
+            One short essay a week — on faith, sport, medicine and the small habits
+            holding it all together. 3 minutes to read. Zero noise.
           </p>
 
           <form

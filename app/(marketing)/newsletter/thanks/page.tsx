@@ -3,7 +3,7 @@ import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata = generatePageMetadata({
   title: "You're on the list",
-  description: "Thanks for subscribing to Ontario.",
+  description: "Thanks for subscribing to About a Girl.",
   path: "/newsletter/thanks",
   noIndex: true,
 });

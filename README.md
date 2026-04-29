@@ -1,8 +1,9 @@
-# Ontario Blog — Next.js 16 + Payload 3
+# About a Girl — Next.js 16 + Payload 3
 
-A premium, editorial-grade blog platform built on Next.js 16 (App Router,
-Turbopack), React 19, Tailwind v4 and Payload CMS 3 — backed by Supabase
-Postgres + Storage and deployable to Vercel.
+A personal blog about the many sides of one woman — faith, sport,
+medicine and the small things in between. Built on Next.js 16 (App
+Router, Turbopack), React 19, Tailwind v4 and Payload CMS 3 — backed by
+Supabase Postgres + Storage and deployable to Vercel.
 
 ## Stack
 
@@ -139,7 +140,7 @@ Layered on top of Phase 1:
   invalid or alt text missing (can be toggled in the `Site Settings`
   global, overridable per post).
 - **Auto alt-text** — Media `beforeChange` hook + `/api/ai/alt` endpoint
-  uses OpenAI Vision to fill missing alt text.
+  use Groq (Llama 4 Scout vision) to fill missing alt text.
 - **Auto internal-link suggestions** — `/api/ai/internal-links` returns
   ranked related posts for the current draft, rendered in an admin side
   panel.
@@ -191,9 +192,10 @@ Add `CRON_SECRET` to your env and call the endpoint with
 
 | Var | Purpose |
 |-----|---------|
-| `OPENAI_API_KEY` | Auto alt-text + internal-link suggestions |
+| `GROQ_API_KEY` | Auto alt-text via Groq vision (free tier at console.groq.com) |
+| `GROQ_VISION_MODEL` | Override the default `meta-llama/llama-4-scout-17b-16e-instruct` |
 | `INDEXNOW_KEY` | Verification key hosted at `/api/indexnow/[key]` |
-| `CANONICAL_HOST` | Force e.g. `www.ontario.com` → apex |
+| `CANONICAL_HOST` | Force e.g. `www.aboutagirl.blog` → apex |
 | `CRON_SECRET` | Bearer token for cron endpoints |
 
 ## Graceful fallback

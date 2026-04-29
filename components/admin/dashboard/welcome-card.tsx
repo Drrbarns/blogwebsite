@@ -50,10 +50,10 @@ export function WelcomeCard({ name, stats, adminBase, canCreatePosts }: Props) {
 
   const headlineCopy =
     stats.postsPublished === 0
-      ? "Let's set the typewriter on fire."
+      ? "Open the journal. Write the first entry."
       : stats.postsDrafts > 0
         ? "There's something in the pipeline."
-        : "The pipeline is clear. Time to start a new story.";
+        : "The desk is clear. Time to write the next entry.";
 
   return (
     <header className="om-dash__welcome">

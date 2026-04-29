@@ -5,33 +5,33 @@ import * as React from "react";
 const QUOTES: Array<{ quote: string; author: string }> = [
   {
     quote:
-      "The best editorial tools disappear. They turn weeks of fiddling into hours of writing.",
-    author: "The team that ships",
+      "Some days the call comes from the ward. Some days from the chapel. Most days, both.",
+    author: "From the journal",
   },
   {
     quote:
-      "Designed for the writer, instrumented for the operator, beautiful for the reader.",
-    author: "Editorial principles · 2026",
+      "Faith is the long, slow training. Medicine is the sprint. Writing is the cool-down.",
+    author: "Notes between rounds",
   },
   {
     quote:
-      "Every block, every byline, every link — all version-controlled and live-previewed.",
-    author: "Notes from the playbook",
+      "Show up. Take notes. Let the small things make the bigger story.",
+    author: "Editorial principle · 2026",
   },
 ];
 
 const HIGHLIGHTS: Array<{ title: string; copy: string }> = [
   {
-    title: "Editorial-grade publishing",
-    copy: "Lexical rich text, blocks, scheduled publishing and live preview.",
+    title: "Write in long form",
+    copy: "Lexical rich text, blocks, scheduled posts and live preview.",
   },
   {
-    title: "SEO baked in",
-    copy: "Automatic schema, OG art, sitemaps, IndexNow and SERP previews.",
+    title: "Quietly indexed",
+    copy: "Schema, OG art, sitemaps and SERP previews handled for you.",
   },
   {
-    title: "Real workflow",
-    copy: "Roles, drafts, version history, link health and 404 logging.",
+    title: "Built around the journal",
+    copy: "Drafts, version history, link health and a 404 log on the side.",
   },
 ];
 
@@ -74,7 +74,7 @@ export default function LoginHero() {
   const q = QUOTES[idx];
 
   return (
-    <aside className="om-login__hero" aria-label="Welcome to the editorial workspace">
+    <aside className="om-login__hero" aria-label="Welcome to the writing studio">
       <div className="om-login__hero-orb om-login__hero-orb--a" aria-hidden />
       <div className="om-login__hero-orb om-login__hero-orb--b" aria-hidden />
       <div className="om-login__hero-orb om-login__hero-orb--c" aria-hidden />
@@ -84,7 +84,7 @@ export default function LoginHero() {
         <div className="om-login__hero-topline">
           <span className="om-login__pill">
             <span className="om-login__pulse" aria-hidden />
-            <span>Ontario CMS · v1.0</span>
+            <span>About a Girl · Studio · v1.0</span>
           </span>
           <span className="om-login__hero-time" aria-live="polite">
             <strong>{time}</strong>
@@ -93,11 +93,11 @@ export default function LoginHero() {
         </div>
 
         <h1 className="om-login__hero-title">
-          A calmer place to <em>ship great writing.</em>
+          A quiet place to <em>write the next entry.</em>
         </h1>
         <p className="om-login__hero-lede">
-          The editorial workspace your writers actually want to open.
-          Branded, fast, and built around the way modern teams publish.
+          Faith, sport, medicine and the small habits in between — captured one
+          post at a time. Sign in to draft, schedule and ship today's piece.
         </p>
 
         <ul className="om-login__hero-list">
@@ -117,7 +117,7 @@ export default function LoginHero() {
           aria-live="polite"
           key={q.quote}
         >
-          <blockquote>“{q.quote}”</blockquote>
+          <blockquote>"{q.quote}"</blockquote>
           <figcaption>
             — {q.author}
             <span className="om-login__hero-quote-dots" aria-hidden>
@@ -133,7 +133,7 @@ export default function LoginHero() {
         </figure>
 
         <footer className="om-login__hero-footer">
-          <span>Crafted for editors</span>
+          <span>Crafted for one writer</span>
           <span aria-hidden>·</span>
           <span>Powered by Payload &amp; Next.js</span>
         </footer>

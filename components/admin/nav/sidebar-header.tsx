@@ -30,8 +30,8 @@ export default async function SidebarHeader(props: ServerProps) {
       <div className="om-sidehead__brand">
         <BrandMark size={36} animated={false} />
         <div className="om-sidehead__brand-text">
-          <span className="om-sidehead__brand-name">Ontario</span>
-          <span className="om-sidehead__brand-sub">Editorial workspace</span>
+          <span className="om-sidehead__brand-name">About a Girl</span>
+          <span className="om-sidehead__brand-sub">Writing studio</span>
         </div>
       </div>
 

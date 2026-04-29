@@ -1,9 +1,9 @@
 import type { CollectionBeforeChangeHook } from "payload";
 
 /**
- * Auto-generate alt text for uploaded images using OpenAI Vision when
- * the editor hasn't supplied one.  Silently no-ops if OPENAI_API_KEY is
- * missing so the CMS keeps working offline.
+ * Auto-generate alt text for uploaded images using Groq vision
+ * (Llama 4 Scout) when the editor hasn't supplied one.  Silently
+ * no-ops if GROQ_API_KEY is missing so the CMS keeps working offline.
  */
 export const autoAltText: CollectionBeforeChangeHook = async ({
   data,
@@ -12,12 +12,11 @@ export const autoAltText: CollectionBeforeChangeHook = async ({
 }) => {
   try {
     if (data.alt && data.alt.trim().length > 0) return data;
-    if (!process.env.OPENAI_API_KEY) return data;
+    if (!process.env.GROQ_API_KEY) return data;
 
     const mimeType = (data.mimeType as string | undefined) ?? "";
     if (!mimeType.startsWith("image/")) return data;
 
-    // Build an URL we can feed to OpenAI
     let url: string | undefined;
     if (data.url) {
       url = data.url as string;
@@ -28,26 +27,28 @@ export const autoAltText: CollectionBeforeChangeHook = async ({
     }
     if (!url) return data;
 
-    const { default: OpenAI } = await import("openai");
-    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const { default: Groq } = await import("groq-sdk");
+    const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
     const response = await client.chat.completions.create({
-      model: process.env.OPENAI_VISION_MODEL ?? "gpt-4o-mini",
+      model:
+        process.env.GROQ_VISION_MODEL ??
+        "meta-llama/llama-4-scout-17b-16e-instruct",
       messages: [
-        {
-          role: "system",
-          content:
-            "You write concise, SEO-friendly alt text for blog images. Respond with ONLY the alt text, 8-16 words, no quotes, no prefix like 'Image of', no period at end.",
-        },
         {
           role: "user",
           content: [
-            { type: "text", text: "Write accessible alt text for this image." },
+            {
+              type: "text",
+              text:
+                "Write concise, SEO-friendly alt text for this blog image (8–16 words). " +
+                "Respond with ONLY the alt text — no quotes, no period, no prefix like 'Image of'.",
+            },
             { type: "image_url", image_url: { url } },
           ],
         },
       ],
-      max_tokens: 80,
+      max_completion_tokens: 80,
       temperature: 0.3,
     });
 
@@ -56,7 +57,7 @@ export const autoAltText: CollectionBeforeChangeHook = async ({
       data.alt = alt.replace(/^["']|["']$/g, "").replace(/\.$/, "");
       req.payload.logger?.info?.(
         { alt: data.alt, op: operation },
-        "auto-alt generated",
+        "auto-alt generated (groq)",
       );
     }
   } catch (err) {

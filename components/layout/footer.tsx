@@ -221,7 +221,7 @@ export function Footer({
         <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-5">
           <p className="text-sm text-muted">
             {copyright ??
-              `© ${new Date().getFullYear()} — ${brandName ?? "Ontario"}. All Rights Reserved.`}
+              `© ${new Date().getFullYear()} — ${brandName ?? "About a Girl"}. All Rights Reserved.`}
           </p>
         </div>
       </div>

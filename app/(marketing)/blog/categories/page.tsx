@@ -6,7 +6,7 @@ export const revalidate = 300;
 
 export const metadata = generatePageMetadata({
   title: "Browse by category",
-  description: "Explore every topic published on Ontario — design, code, business and culture.",
+  description: "Explore every facet of About a Girl — faith, sport, medicine, life and the journal in between.",
   path: "/blog/categories",
 });
 

@@ -21,7 +21,7 @@ export function generatePageMetadata({
 }: MetadataArgs = {}): Metadata {
   const pageTitle = title
     ? `${title} — ${siteDefaults.name}`
-    : `${siteDefaults.name} — Fresh Ideas, Insightful Stories & Practical Tips`;
+    : `${siteDefaults.name} — Faith, Sport, Medicine & Life`;
   const pageDescription = description || siteDefaults.description;
   const url = canonical ?? `${siteDefaults.url}${path}`;
   const image = ogImage || siteDefaults.ogImage;

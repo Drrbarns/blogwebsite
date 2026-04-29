@@ -13,12 +13,12 @@ export function AICard({ adminBase, enabled }: Props) {
       <div className="om-dash__ai-meta">
         <span className="om-dash__ai-pill">
           <span className="om-dash__ai-spark" aria-hidden />
-          AI assist
+          Groq assist
         </span>
         <span
           className={`om-dash__ai-status om-dash__ai-status--${enabled ? "on" : "off"}`}
         >
-          {enabled ? "Connected" : "Add OPENAI_API_KEY"}
+          {enabled ? "Connected · Llama 4 Scout" : "Add GROQ_API_KEY"}
         </span>
       </div>
 
@@ -27,8 +27,9 @@ export function AICard({ adminBase, enabled }: Props) {
         <span className="om-dash__ai-highlight">contextual AI</span>.
       </h2>
       <p className="om-dash__ai-copy">
-        Generate alt text from media, mine internal links from your published
-        archive, and let the system draft SEO snippets while you write.
+        Generate alt text from your photos with Llama 4 Scout on Groq, mine
+        internal links from your archive, and let the studio draft SEO snippets
+        while you write.
       </p>
 
       <ul className="om-dash__ai-list">
@@ -61,11 +62,11 @@ export function AICard({ adminBase, enabled }: Props) {
         </Link>
         <a
           className="om-dash__ai-link"
-          href="https://platform.openai.com"
+          href="https://console.groq.com/keys"
           target="_blank"
           rel="noreferrer"
         >
-          Manage API key
+          Manage Groq key
         </a>
       </div>
     </section>

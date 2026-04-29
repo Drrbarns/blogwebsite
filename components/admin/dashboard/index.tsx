@@ -391,7 +391,7 @@ export default async function AdminDashboard(props: AdminViewServerProps) {
     "there";
 
   const canCreatePosts = Boolean(permissions?.collections?.posts?.create);
-  const aiEnabled = Boolean(process.env.OPENAI_API_KEY);
+  const aiEnabled = Boolean(process.env.GROQ_API_KEY);
 
   return (
     <div className="om-dash">

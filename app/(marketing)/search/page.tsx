@@ -13,7 +13,7 @@ export async function generateMetadata({
   const { q } = await searchParams;
   return generatePageMetadata({
     title: q ? `Search — ${q}` : "Search",
-    description: "Search the Ontario editorial archive.",
+    description: "Search the About a Girl archive — faith, sport, medicine and life.",
     path: `/search${q ? `?q=${encodeURIComponent(q)}` : ""}`,
     noIndex: true,
   });

@@ -38,7 +38,7 @@ export const Navigation: GlobalConfig = {
       name: "brand",
       type: "group",
       fields: [
-        { name: "label", type: "text", defaultValue: "Ontario" },
+        { name: "label", type: "text", defaultValue: "About a Girl" },
         { name: "tagline", type: "text" },
       ],
     },

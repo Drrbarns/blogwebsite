@@ -93,7 +93,7 @@ export function Navbar({
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => window.dispatchEvent(new Event("ontario:open-search"))}
+              onClick={() => window.dispatchEvent(new Event("aboutagirl:open-search"))}
               className="hidden lg:flex items-center justify-center w-10 h-10 rounded-full text-foreground/70 hover:text-foreground hover:bg-stone-100 transition-colors"
               aria-label="Search"
             >
@@ -167,7 +167,7 @@ export function Navbar({
                   type="button"
                   onClick={() => {
                     setMobileOpen(false);
-                    window.dispatchEvent(new Event("ontario:open-search"));
+                    window.dispatchEvent(new Event("aboutagirl:open-search"));
                   }}
                   className="flex items-center justify-center w-10 h-10 rounded-full text-foreground/70 hover:bg-stone-100 transition-colors"
                   aria-label="Search"

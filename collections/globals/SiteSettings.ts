@@ -17,7 +17,7 @@ export const SiteSettings: GlobalConfig = {
       name: "brand",
       type: "group",
       fields: [
-        { name: "name", type: "text", required: true, defaultValue: "Ontario" },
+        { name: "name", type: "text", required: true, defaultValue: "About a Girl" },
         { name: "tagline", type: "text" },
         {
           name: "description",
@@ -49,7 +49,7 @@ export const SiteSettings: GlobalConfig = {
         {
           name: "titleTemplate",
           type: "text",
-          defaultValue: "%s — Ontario",
+          defaultValue: "%s — About a Girl",
           admin: { description: "Use %s as the placeholder for the page title." },
         },
         { name: "defaultTitle", type: "text" },

@@ -32,7 +32,7 @@ export function SearchDialog() {
       if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
-    window.addEventListener("ontario:open-search", () => setOpen(true));
+    window.addEventListener("aboutagirl:open-search", () => setOpen(true));
     return () => {
       window.removeEventListener("keydown", onKey);
     };
