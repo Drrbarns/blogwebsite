@@ -3,8 +3,8 @@ import * as React from "react";
 const SHA = (process.env.VERCEL_GIT_COMMIT_SHA ?? "").slice(0, 7);
 
 /**
- * Tight footer rendered under the login form. Two links and a single
- * fine-print line — no keyboard shortcut chrome, no marketing spam.
+ * Centered footer rendered under the login card. Two helper links and
+ * a single fine-print line — no chrome.
  */
 export default function LoginAfter() {
   const year = new Date().getFullYear();
@@ -12,7 +12,7 @@ export default function LoginAfter() {
     <div className="om-login__after">
       <div className="om-login__after-meta">
         <a className="om-login__after-link" href="/" target="_blank" rel="noreferrer">
-          ← Back to site
+          ← Back to the blog
         </a>
         <span className="om-login__after-divider" aria-hidden>
           ·
@@ -23,7 +23,8 @@ export default function LoginAfter() {
       </div>
 
       <p className="om-login__after-fineprint">
-        © {year} About a Girl{SHA ? ` · build ${SHA}` : ""} · Secure session, encrypted at rest.
+        © {year} About a Girl · Secure session, encrypted at rest
+        {SHA ? ` · build ${SHA}` : ""}.
       </p>
     </div>
   );

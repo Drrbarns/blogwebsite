@@ -1,25 +1,33 @@
 import * as React from "react";
 
-import LoginHero from "./login-hero";
-
 /**
- * Renders above the form area on the login page.
- *
- * The brand panel is rendered here so it sits on the LEFT of the form on
- * desktop (via the grid in custom.scss). Above the form on the right we
- * also render a small heading + lede so the form has a proper title and
- * does not look like a stranded input pair.
+ * Renders above the login card. A centered brand strip + heading +
+ * one-line subtitle. The form card is rendered by Payload immediately
+ * after this block — see the LOGIN section in custom.scss for the
+ * card / icon / button styling.
  */
 export default function LoginBefore() {
   return (
-    <>
-      <LoginHero />
-      <div className="om-login__intro">
-        <h2 className="om-login__intro-title">Welcome back</h2>
-        <p className="om-login__intro-lede">
-          Sign in to continue to the writing studio.
-        </p>
-      </div>
-    </>
+    <div className="om-login__head">
+      <span className="om-login__pill">
+        <span className="om-login__pulse" aria-hidden />
+        <span>About a Girl · Studio</span>
+      </span>
+
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/logo.png"
+        alt=""
+        width={84}
+        height={84}
+        className="om-login__head-mark"
+        aria-hidden
+      />
+
+      <h1 className="om-login__head-title">Welcome back</h1>
+      <p className="om-login__head-lede">
+        Sign in to continue writing today&apos;s entry.
+      </p>
+    </div>
   );
 }
