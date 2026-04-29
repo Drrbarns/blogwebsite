@@ -26,6 +26,18 @@ export default function LoginAfter() {
         © {year} About a Girl · Secure session, encrypted at rest
         {SHA ? ` · build ${SHA}` : ""}.
       </p>
+
+      <p className="om-login__after-poweredby">
+        Powered by{" "}
+        <a
+          href="https://doctorbarns.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="om-login__after-link"
+        >
+          Doctor Barns Tech
+        </a>
+      </p>
     </div>
   );
 }

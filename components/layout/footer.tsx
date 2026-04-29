@@ -218,10 +218,21 @@ export function Footer({
       </div>
 
       <div className="border-t border-stone-200">
-        <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-5">
+        <div className="max-w-[1280px] mx-auto px-4 lg:px-8 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
           <p className="text-sm text-muted">
             {copyright ??
               `© ${new Date().getFullYear()} — ${brandName ?? "About a Girl"}. All Rights Reserved.`}
+          </p>
+          <p className="text-sm text-muted">
+            Powered by{" "}
+            <a
+              href="https://doctorbarns.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-foreground/80 hover:text-foreground transition-colors"
+            >
+              Doctor Barns Tech
+            </a>
           </p>
         </div>
       </div>
