@@ -8,9 +8,12 @@
  *   - Categories from lib/data/posts.ts + lib/data/site-config.ts
  *   - Tags from lib/data/posts.ts
  *   - Posts from lib/data/posts.ts + lib/data/blog-posts.ts
- *     (cover images are downloaded from Unsplash and uploaded to Supabase).
+ *     (cover images: remote URLs via fetch, or site paths like /images/... read
+ *     from public/, or local:public/... same as scripts/rewrite-content.ts).
  */
 import { Buffer } from "node:buffer";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { getPayload } from "payload";
 import config from "../payload.config";
 
@@ -71,6 +74,15 @@ async function upsertUser(payload: PayloadInstance) {
   return user;
 }
 
+function mimeAndNameFromPath(fullPath: string): { mimeType: string; filename: string } {
+  const base = fullPath.split("/").pop() ?? `image-${Date.now()}.bin`;
+  const filename = base.replace(/[^a-zA-Z0-9_.-]/g, "-").slice(0, 120);
+  if (/\.png$/i.test(fullPath)) return { mimeType: "image/png", filename };
+  if (/\.jpe?g$/i.test(fullPath)) return { mimeType: "image/jpeg", filename };
+  if (/\.webp$/i.test(fullPath)) return { mimeType: "image/webp", filename };
+  return { mimeType: "application/octet-stream", filename };
+}
+
 async function upsertMediaFromUrl(
   payload: PayloadInstance,
   url: string,
@@ -85,17 +97,40 @@ async function upsertMediaFromUrl(
   if (existing.docs.length) return existing.docs[0];
 
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`fetch ${url} → ${res.status}`);
-    const arrayBuffer = await res.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const filename =
-      key
-        .split("/")
-        .pop()
-        ?.replace(/[^a-zA-Z0-9_.-]/g, "-")
-        .slice(0, 60) ?? `image-${Date.now()}.jpg`;
-    const mimeType = res.headers.get("content-type") ?? "image/jpeg";
+    let buffer: Buffer;
+    let mimeType: string;
+    let filename: string;
+
+    if (url.startsWith("local:")) {
+      const rel = url.slice("local:".length).replace(/^\//, "");
+      const fullPath = join(process.cwd(), rel);
+      buffer = readFileSync(fullPath);
+      ({ mimeType, filename } = mimeAndNameFromPath(fullPath));
+    } else if (url.startsWith("/")) {
+      const rel = url.replace(/^\//, "");
+      const fullPath = join(process.cwd(), "public", rel);
+      buffer = readFileSync(fullPath);
+      ({ mimeType, filename } = mimeAndNameFromPath(fullPath));
+    } else {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`fetch ${url} → ${res.status}`);
+      buffer = Buffer.from(await res.arrayBuffer());
+      mimeType = res.headers.get("content-type") ?? "image/jpeg";
+      filename =
+        key
+          .split("/")
+          .pop()
+          ?.replace(/[^a-zA-Z0-9_.-]/g, "-")
+          .slice(0, 60) ?? `image-${Date.now()}.jpg`;
+      if (
+        !filename.endsWith(".jpg") &&
+        !filename.endsWith(".jpeg") &&
+        !filename.endsWith(".png") &&
+        !filename.endsWith(".webp")
+      ) {
+        filename = `${filename}.jpg`;
+      }
+    }
 
     const doc = await payload.create({
       collection: "media",
@@ -103,9 +138,7 @@ async function upsertMediaFromUrl(
       file: {
         data: buffer,
         mimetype: mimeType,
-        name: filename.endsWith(".jpg") || filename.endsWith(".jpeg") || filename.endsWith(".png") || filename.endsWith(".webp")
-          ? filename
-          : `${filename}.jpg`,
+        name: filename,
         size: buffer.length,
       },
     });
