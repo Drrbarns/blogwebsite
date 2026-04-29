@@ -308,14 +308,17 @@ input[type='time'],
 textarea,
 select {
   border-radius: var(--om-radius-sm) !important;
-  background: var(--om-surface) !important;
+  /* Use background-color (not the shorthand) so other rules can layer
+     a `background-image:` (e.g. the login email/password icons) without
+     being clobbered. */
+  background-color: var(--om-surface) !important;
   border: 1px solid var(--om-border) !important;
   padding: 11px 14px !important;
   font-size: 14px !important;
   color: var(--om-text) !important;
   font-family: var(--om-font-sans) !important;
   transition: border-color 140ms ease, box-shadow 140ms ease,
-    background 140ms ease;
+    background-color 140ms ease;
 
   &:hover {
     border-color: var(--om-border-strong) !important;
@@ -416,12 +419,44 @@ label {
     display: none;
   }
 
-  /* The login form itself becomes the centered card. */
+  /* Forgot/reset/verify pages render an h1 + lead paragraph that
+     Payload paints flush-left.  Centre + restyle them so the page has
+     the same vibe as the custom login header. */
+  > h1,
+  .template-minimal__wrap > h1,
+  .template-minimal__wrap > p {
+    text-align: center;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .template-minimal__wrap > h1 {
+    font-family: var(--om-font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 3vw, 36px);
+    letter-spacing: -0.025em;
+    color: var(--om-text);
+    margin-top: 12px;
+    margin-bottom: 8px;
+  }
+
+  .template-minimal__wrap > p {
+    color: var(--om-text-muted);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  /* The form becomes the centered card.  Match any direct form child
+     because the class names differ across login / forgot / reset /
+     verify and across Payload patch versions. */
   .login__form,
   form.login__form,
   form.forgot-password__form,
   form.reset-password__form,
-  form.verify__form {
+  form.verify__form,
+  .template-minimal__wrap > form {
     width: 100%;
     margin: 0;
     padding: 28px 28px 24px;
@@ -445,33 +480,82 @@ label {
 
       &:hover { color: var(--om-accent); }
     }
+  }
 
-    button[type='submit'],
-    .form-submit button {
-      width: 100%;
-      padding: 14px 20px !important;
-      font-size: 15px !important;
-      font-weight: 600 !important;
-      letter-spacing: 0.01em;
+  /* Big black submit button — written outside `.login__form` so it
+     also catches forgot/reset/verify templates that render the button
+     directly under `.template-minimal__wrap` rather than inside a
+     known form class. */
+  button[type='submit'],
+  .form-submit button,
+  .form-submit__button,
+  button.btn[type='submit'] {
+    display: block !important;
+    width: 100% !important;
+    padding: 14px 20px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em !important;
+    background: var(--om-text) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--om-text) !important;
+    border-radius: var(--om-radius-full) !important;
+    text-align: center !important;
+    box-shadow: var(--om-shadow-sm) !important;
+    transition: background 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+
+    &:not(:disabled):hover {
+      background: #000 !important;
+      border-color: #000 !important;
+      box-shadow: var(--om-shadow-md) !important;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6 !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+    }
+  }
+
+  /* Stand-alone secondary links rendered after the form on forgot /
+     reset (e.g. "Back to login").  Centre them under the card and
+     match the after-form link style. */
+  .template-minimal__wrap > a {
+    display: inline-block;
+    margin: 22px auto 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--om-text-soft);
+    text-decoration: none;
+    transition: color 140ms ease;
+
+    &:hover {
+      color: var(--om-accent);
+      text-decoration: none;
     }
   }
 
   /* Email + password inputs get an icon prefix and extra left padding
-     so they look like a proper login form, not a generic field grid. */
+     so they look like a proper login form, not a generic field grid.
+     `!important` is required because Payload's bundled stylesheet sets
+     `background:` (shorthand) on inputs, which would otherwise reset
+     our `background-image`. */
   input[type='email'] {
     padding-left: 44px !important;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23a8a29e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='M3 7l9 6 9-6'/></svg>");
-    background-repeat: no-repeat;
-    background-position: 14px center;
-    background-size: 18px 18px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23a8a29e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='M3 7l9 6 9-6'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-position: 14px center !important;
+    background-size: 18px 18px !important;
   }
 
   input[type='password'] {
     padding-left: 44px !important;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23a8a29e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V8a4 4 0 0 1 8 0v3'/></svg>");
-    background-repeat: no-repeat;
-    background-position: 14px center;
-    background-size: 18px 18px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23a8a29e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'><rect x='4' y='11' width='16' height='10' rx='2'/><path d='M8 11V8a4 4 0 0 1 8 0v3'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-position: 14px center !important;
+    background-size: 18px 18px !important;
   }
 
   .om-login__after {
@@ -2564,4 +2648,888 @@ label {
 .template-default__wrap > h1,
 .dashboard__wrap > h1 {
   display: none;
+}
+
+/* ============================================================== *
+ * NATIVE PAYLOAD CHROME — list, edit, drawers, modals, toasts
+ *
+ * Below this point we polish every Payload-bundled surface so the
+ * studio feels like a single product instead of "custom dashboard +
+ * stock CMS".  Selectors target the BEM classes Payload ships in
+ * v3.x; we layer brand tokens + soft borders + accent focus rings on
+ * top of the defaults.
+ * ============================================================== */
+
+/* ── Generic page chrome ────────────────────────────────────────── */
+
+.template-default,
+.template-default__wrap,
+.template-default__main {
+  background: var(--om-bg) !important;
+}
+
+.template-default__main {
+  padding: 0 !important;
+}
+
+.template-default__wrap > .render-title__title,
+.gutter--left > h1 {
+  font-family: var(--om-font-display) !important;
+  font-size: clamp(28px, 2.4vw, 36px) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+  color: var(--om-text) !important;
+}
+
+/* ── BUTTONS — every variant, not just primary/secondary ───────── */
+
+.btn {
+  border-radius: var(--om-radius-full) !important;
+  font-family: var(--om-font-sans) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.005em !important;
+  font-size: 13.5px !important;
+  padding: 10px 18px !important;
+  line-height: 1 !important;
+  border-width: 1px !important;
+  transition: background 140ms ease, color 140ms ease,
+    border-color 140ms ease, transform 140ms ease, box-shadow 140ms ease,
+    opacity 140ms ease;
+
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 3px var(--om-accent-ring) !important;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.55 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+  }
+}
+
+.btn--style-primary {
+  background: var(--om-text) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: var(--om-shadow-sm) !important;
+
+  &:not(:disabled):hover {
+    background: #000000 !important;
+    box-shadow: var(--om-shadow-md) !important;
+    transform: translateY(-1px);
+  }
+}
+
+.btn--style-secondary {
+  background: var(--om-surface) !important;
+  color: var(--om-text) !important;
+  border: 1px solid var(--om-border) !important;
+
+  &:not(:disabled):hover {
+    background: var(--om-surface-soft) !important;
+    border-color: var(--om-border-strong) !important;
+  }
+}
+
+/* `.btn--style-pill` is just Payload's "fully-rounded" shape modifier
+   for buttons — it can apply to the *primary* login submit too, so we
+   only enforce shape here, not colour. */
+.btn--style-pill {
+  border-radius: var(--om-radius-full) !important;
+}
+
+/* True status chips (rendered standalone, not as a button shape). */
+.pill {
+  display: inline-flex !important;
+  align-items: center;
+  border-radius: var(--om-radius-full) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+  padding: 4px 10px !important;
+  background: var(--om-surface-soft) !important;
+  color: var(--om-text-soft) !important;
+  border: 1px solid var(--om-border) !important;
+  line-height: 1 !important;
+}
+
+.pill--style-success,
+.status--published {
+  background: var(--om-success-bg) !important;
+  color: var(--om-success) !important;
+  border-color: transparent !important;
+}
+
+.pill--style-warning,
+.status--draft {
+  background: var(--om-warning-bg) !important;
+  color: var(--om-warning) !important;
+  border-color: transparent !important;
+}
+
+.pill--style-error {
+  background: var(--om-danger-bg) !important;
+  color: var(--om-danger) !important;
+  border-color: transparent !important;
+}
+
+.pill--style-light {
+  background: var(--om-surface) !important;
+  color: var(--om-text-muted) !important;
+  border: 1px solid var(--om-border) !important;
+}
+
+/* Icon-only buttons (close, ellipsis, etc.) */
+.btn--icon-style-without-border,
+.btn--icon-style-with-border {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  border-radius: var(--om-radius-full) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: var(--om-text-muted) !important;
+
+  &:hover {
+    background: var(--om-surface-soft) !important;
+    color: var(--om-text) !important;
+  }
+}
+
+.btn--icon-style-with-border {
+  border-color: var(--om-border) !important;
+  background: var(--om-surface) !important;
+}
+
+/* ── DOCUMENT EDIT VIEW ────────────────────────────────────────── */
+
+.collection-edit,
+.collection-edit__main,
+.global-edit,
+.global-edit__main {
+  background: var(--om-bg) !important;
+}
+
+.doc-header,
+.collection-edit__header {
+  padding: 26px 32px 16px !important;
+  background: transparent !important;
+  border-bottom: 1px solid var(--om-border) !important;
+}
+
+.doc-header__title,
+.render-title__title {
+  font-family: var(--om-font-display) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+  color: var(--om-text) !important;
+}
+
+.doc-header__id {
+  font-family: var(--om-font-mono) !important;
+  font-size: 11.5px !important;
+  color: var(--om-text-subtle) !important;
+  background: var(--om-surface-soft) !important;
+  border: 1px solid var(--om-border) !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+}
+
+/* Save / publish bar (sticks bottom or top depending on view) */
+.doc-controls,
+.doc-controls__content {
+  background: var(--om-surface) !important;
+  border-bottom: 1px solid var(--om-border) !important;
+  padding: 14px 32px !important;
+}
+
+.doc-controls__sidebar,
+.doc-controls__sidebar-fields {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-lg) !important;
+  padding: 18px 18px 16px !important;
+  margin: 0 0 18px !important;
+  box-shadow: var(--om-shadow-xs);
+}
+
+.doc-controls__sidebar-fields .field-label {
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
+  color: var(--om-text-subtle) !important;
+  font-weight: 700 !important;
+}
+
+.doc-controls__list-button,
+.doc-controls__btn {
+  border-radius: var(--om-radius-full) !important;
+}
+
+.doc-tab-bar,
+.doc-tabs {
+  border-bottom: 1px solid var(--om-border) !important;
+  background: transparent !important;
+  padding: 0 32px !important;
+}
+
+.doc-tab-bar__tab,
+.doc-tabs__tab {
+  padding: 12px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: var(--om-text-muted) !important;
+  border-bottom: 2px solid transparent !important;
+  background: transparent !important;
+  margin-right: 4px !important;
+  transition: color 140ms ease, border-color 140ms ease;
+
+  &:hover { color: var(--om-text) !important; }
+
+  &--active,
+  &.is-active,
+  &[aria-current='page'] {
+    color: var(--om-accent) !important;
+    border-bottom-color: var(--om-accent) !important;
+  }
+}
+
+/* Right-rail status pills inside doc edit */
+.doc-controls__sidebar .status,
+.doc-controls__sidebar .pill {
+  font-size: 11px !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Versions / preview / API / live preview links above the form */
+.doc-controls__action {
+  color: var(--om-text-muted) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 8px 14px !important;
+  border-radius: var(--om-radius-full) !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  transition: background 140ms ease, color 140ms ease;
+
+  &:hover {
+    background: var(--om-surface-soft) !important;
+    color: var(--om-text) !important;
+  }
+}
+
+/* ── COLLECTION LIST VIEW ──────────────────────────────────────── */
+
+.collection-list,
+.collection-list__wrap,
+.list-controls,
+.list-controls__buttons {
+  background: transparent !important;
+}
+
+.collection-list__sub-header {
+  padding: 22px 32px 10px !important;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.list-controls {
+  padding: 12px 32px 18px !important;
+  border-bottom: 1px solid var(--om-border) !important;
+  margin-bottom: 8px !important;
+}
+
+.list-controls__where,
+.search-filter {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-md) !important;
+  padding: 4px 6px 4px 12px !important;
+}
+
+.search-filter__input {
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 4px !important;
+  font-size: 13.5px !important;
+  color: var(--om-text) !important;
+
+  &::placeholder { color: var(--om-text-subtle) !important; }
+}
+
+.collection-list .table {
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-md) !important;
+  overflow: hidden !important;
+  background: var(--om-surface) !important;
+  box-shadow: var(--om-shadow-xs);
+}
+
+.collection-list .table thead th,
+.relationship-table .table thead th {
+  background: var(--om-surface-soft) !important;
+  color: var(--om-text-subtle) !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
+  padding: 14px 16px !important;
+  border-bottom: 1px solid var(--om-border) !important;
+  text-align: left;
+}
+
+.collection-list .table tbody td,
+.relationship-table .table tbody td {
+  padding: 14px 16px !important;
+  border-bottom: 1px solid var(--om-border) !important;
+  font-size: 13.5px !important;
+  color: var(--om-text-soft) !important;
+  vertical-align: middle !important;
+}
+
+.collection-list .table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+.collection-list .table tbody tr:hover {
+  background: var(--om-surface-soft) !important;
+}
+
+.collection-list .table tbody td a {
+  color: var(--om-text) !important;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover { color: var(--om-accent) !important; }
+}
+
+.row-label {
+  background: var(--om-surface-soft) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-sm) !important;
+  padding: 10px 14px !important;
+  font-weight: 600 !important;
+  color: var(--om-text) !important;
+}
+
+/* Pagination at the foot of list views */
+.list-pagination,
+.paginator {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 32px !important;
+}
+
+.paginator__page,
+.list-pagination__page,
+.list-pagination__nav-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: var(--om-radius-full) !important;
+  border: 1px solid var(--om-border) !important;
+  background: var(--om-surface) !important;
+  color: var(--om-text-soft) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+
+  &:hover {
+    border-color: var(--om-border-strong) !important;
+    color: var(--om-text) !important;
+  }
+
+  &--active,
+  &.is-active,
+  &[aria-current='page'] {
+    background: var(--om-text) !important;
+    color: #ffffff !important;
+    border-color: var(--om-text) !important;
+  }
+}
+
+/* List view "Create new" button (top-right) */
+.list-header__create,
+.collection-list__create,
+.create-new-button {
+  border-radius: var(--om-radius-full) !important;
+  background: var(--om-text) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--om-text) !important;
+  font-weight: 600 !important;
+  padding: 10px 18px !important;
+
+  &:hover {
+    background: #000 !important;
+    border-color: #000 !important;
+  }
+}
+
+/* Empty state inside list view */
+.no-results,
+.empty-state {
+  padding: 56px 32px !important;
+  text-align: center;
+  color: var(--om-text-muted) !important;
+
+  h2,
+  h3 {
+    font-family: var(--om-font-display);
+    color: var(--om-text);
+  }
+}
+
+/* ── FIELD ERROR / REQUIRED ────────────────────────────────────── */
+
+.field-error,
+.tooltip--error {
+  color: var(--om-danger) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  margin-top: 6px !important;
+}
+
+.field-required {
+  color: var(--om-accent) !important;
+}
+
+/* Highlight invalid fields with brand danger ring */
+.field-type.error input,
+.field-type.error textarea,
+.field-type.error select,
+.field-type--error input {
+  border-color: var(--om-danger) !important;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.10) !important;
+}
+
+/* ── ARRAY / BLOCKS FIELD CHROME ───────────────────────────────── */
+
+.array-field__draggable-rows,
+.blocks-field__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.array-field__row,
+.blocks-field__row {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-md) !important;
+  box-shadow: var(--om-shadow-xs);
+  padding: 14px 16px !important;
+}
+
+.array-field__row-header,
+.blocks-field__row-header {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--om-border);
+  margin-bottom: 12px;
+
+  .pill { font-size: 10.5px !important; }
+}
+
+.array-actions,
+.blocks-field__add-button-wrap {
+  margin-top: 12px;
+}
+
+/* ── DRAWERS (inline doc drawers used by relationship fields) ──── */
+
+.drawer {
+  background: rgba(28, 25, 23, 0.45) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.drawer__content,
+.drawer__content-children {
+  background: var(--om-surface) !important;
+  border-left: 1px solid var(--om-border) !important;
+  box-shadow: var(--om-shadow-pop) !important;
+  border-radius: 0 !important;
+}
+
+.drawer__header {
+  padding: 18px 24px !important;
+  border-bottom: 1px solid var(--om-border) !important;
+  background: var(--om-surface-soft) !important;
+}
+
+.drawer__header-title {
+  font-family: var(--om-font-display) !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: var(--om-text) !important;
+  letter-spacing: -0.015em;
+}
+
+.drawer__close {
+  border-radius: var(--om-radius-full) !important;
+  width: 34px !important;
+  height: 34px !important;
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  color: var(--om-text-muted) !important;
+
+  &:hover {
+    background: var(--om-surface-soft) !important;
+    color: var(--om-text) !important;
+  }
+}
+
+/* ── MODALS ────────────────────────────────────────────────────── */
+
+.modal {
+  background: rgba(28, 25, 23, 0.45) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.modal__bg {
+  background: transparent !important;
+}
+
+.modal-window,
+.confirmation-modal {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-xl) !important;
+  box-shadow: var(--om-shadow-pop) !important;
+  padding: 26px !important;
+  max-width: 460px;
+
+  h1, h2 {
+    font-family: var(--om-font-display);
+    font-size: 22px !important;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+  }
+
+  p { color: var(--om-text-muted); line-height: 1.55; }
+}
+
+/* ── TOASTS ────────────────────────────────────────────────────── */
+
+.Toastify__toast,
+.payload-toast-container .Toastify__toast {
+  background: var(--om-text) !important;
+  color: #ffffff !important;
+  border-radius: var(--om-radius-md) !important;
+  box-shadow: var(--om-shadow-lg) !important;
+  font-family: var(--om-font-sans) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  padding: 12px 14px !important;
+}
+
+.Toastify__toast--success {
+  background: var(--om-success) !important;
+}
+.Toastify__toast--warning {
+  background: var(--om-warning) !important;
+}
+.Toastify__toast--error {
+  background: var(--om-danger) !important;
+}
+
+.Toastify__close-button {
+  color: rgba(255, 255, 255, 0.7) !important;
+  opacity: 1 !important;
+}
+
+.Toastify__progress-bar {
+  background: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* ── UPLOAD / DROPZONE (Media collection) ──────────────────────── */
+
+.dropzone,
+.upload__dropzone {
+  background: var(--om-surface) !important;
+  border: 2px dashed var(--om-border-strong) !important;
+  border-radius: var(--om-radius-lg) !important;
+  padding: 36px 24px !important;
+  text-align: center;
+  color: var(--om-text-muted) !important;
+  font-weight: 500;
+  transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+
+  &:hover,
+  &.is-active,
+  &--active {
+    border-color: var(--om-accent) !important;
+    background: var(--om-accent-bg) !important;
+    color: var(--om-accent) !important;
+  }
+}
+
+.upload__file-details,
+.file-details {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-lg) !important;
+  padding: 18px !important;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.file-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--om-text-soft);
+
+  strong {
+    color: var(--om-text);
+    font-weight: 600;
+  }
+}
+
+.file-meta__url {
+  font-family: var(--om-font-mono);
+  font-size: 11.5px;
+  color: var(--om-text-subtle);
+  word-break: break-all;
+}
+
+/* ── DROPDOWNS / POPUPS / ACTION MENUS ─────────────────────────── */
+
+.popup,
+.popup__content,
+.dropdown__content,
+.dropdown-menu {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-md) !important;
+  box-shadow: var(--om-shadow-lg) !important;
+  padding: 6px !important;
+  min-width: 200px;
+}
+
+.popup__content button,
+.popup__content a,
+.dropdown__content button,
+.dropdown__content a,
+.popup-button-list__button {
+  display: flex !important;
+  align-items: center;
+  width: 100%;
+  padding: 9px 12px !important;
+  border-radius: var(--om-radius-sm) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: var(--om-text-soft) !important;
+  background: transparent !important;
+  border: none !important;
+  text-decoration: none !important;
+  text-align: left !important;
+  transition: background 140ms ease, color 140ms ease;
+
+  &:hover {
+    background: var(--om-surface-soft) !important;
+    color: var(--om-text) !important;
+  }
+}
+
+/* ── BREADCRUMBS (above doc edit titles in some templates) ─────── */
+
+.step-nav,
+.breadcrumb,
+.breadcrumbs {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px 0 !important;
+  font-size: 12.5px;
+  color: var(--om-text-muted);
+
+  a {
+    color: var(--om-text-muted) !important;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 140ms ease;
+
+    &:hover { color: var(--om-text) !important; }
+  }
+
+  .step-nav__separator,
+  .breadcrumb__separator {
+    color: var(--om-text-subtle);
+  }
+}
+
+/* ── MY ACCOUNT VIEW ───────────────────────────────────────────── */
+
+.account,
+.account__form {
+  padding: 0 32px 48px !important;
+  background: var(--om-bg) !important;
+}
+
+.account__main {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.account__email {
+  font-family: var(--om-font-mono);
+  font-size: 13px;
+  color: var(--om-text-subtle);
+  background: var(--om-surface-soft);
+  border: 1px solid var(--om-border);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+/* ── COLLAPSIBLES (group fields, sidebar sections) ─────────────── */
+
+.collapsible {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-md) !important;
+  box-shadow: var(--om-shadow-xs);
+  margin-bottom: 14px !important;
+}
+
+.collapsible__toggle {
+  padding: 14px 16px !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  color: var(--om-text) !important;
+  background: transparent !important;
+  border: none !important;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 140ms ease;
+
+  &:hover { background: var(--om-surface-soft) !important; }
+}
+
+.collapsible__content {
+  padding: 4px 16px 16px !important;
+  border-top: 1px dashed var(--om-border) !important;
+}
+
+/* ── TABS FIELD (already partial — round it out) ───────────────── */
+
+.tabs-field__tabs-wrap {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-md) !important;
+  padding: 4px !important;
+  display: inline-flex;
+  gap: 2px;
+  margin-bottom: 18px !important;
+}
+
+.tabs-field__tab-button {
+  padding: 8px 16px !important;
+  border-radius: var(--om-radius-sm) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--om-text-muted) !important;
+  background: transparent !important;
+  border: none !important;
+  transition: background 140ms ease, color 140ms ease;
+
+  &:hover {
+    background: var(--om-surface-soft) !important;
+    color: var(--om-text) !important;
+  }
+
+  &--active,
+  &.is-active,
+  &[aria-current='page'] {
+    background: var(--om-text) !important;
+    color: #ffffff !important;
+  }
+}
+
+/* ── VERSIONS / DIFF VIEWER ────────────────────────────────────── */
+
+.versions,
+.version,
+.versions__rows {
+  background: transparent !important;
+}
+
+.version,
+.versions__row {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-md) !important;
+  box-shadow: var(--om-shadow-xs);
+  padding: 16px !important;
+  margin-bottom: 10px !important;
+}
+
+.diff-view,
+.versions-diff {
+  background: var(--om-surface) !important;
+  border: 1px solid var(--om-border) !important;
+  border-radius: var(--om-radius-md) !important;
+  font-family: var(--om-font-mono) !important;
+  font-size: 13px;
+  padding: 14px !important;
+}
+
+/* ── ROW + LIST INTERNAL EMPTY STATES ──────────────────────────── */
+
+.relationship--has-no-results,
+.upload--no-relationships {
+  background: var(--om-surface-soft) !important;
+  border: 1px dashed var(--om-border-strong) !important;
+  border-radius: var(--om-radius-md) !important;
+  padding: 18px !important;
+  color: var(--om-text-muted) !important;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ── ERROR PAGES (404 + unauthorized inside admin shell) ───────── */
+
+.not-found,
+.unauthorized {
+  padding: 56px 32px !important;
+  text-align: center;
+  background: var(--om-bg);
+
+  h1 {
+    font-family: var(--om-font-display);
+    font-size: clamp(40px, 4vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--om-text);
+    margin: 0 0 12px;
+  }
+
+  p {
+    color: var(--om-text-muted);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto 28px;
+  }
 }
