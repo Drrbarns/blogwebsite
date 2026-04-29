@@ -5,6 +5,8 @@
  * via async helpers like generatePageMetadata().
  */
 
+import { resolvePublicSiteOrigin } from "@/lib/env/site-origin";
+
 const fallback = (...vals: (string | undefined | null)[]): string => {
   for (const v of vals) {
     if (v && v.trim()) return v.trim();
@@ -12,12 +14,7 @@ const fallback = (...vals: (string | undefined | null)[]): string => {
   return "";
 };
 
-export const SITE_URL =
-  fallback(
-    process.env.NEXT_PUBLIC_SITE_URL,
-    process.env.NEXT_PUBLIC_SERVER_URL,
-    process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  ) || "http://localhost:3000";
+export const SITE_URL = resolvePublicSiteOrigin();
 
 export const SITE_NAME =
   fallback(process.env.NEXT_PUBLIC_SITE_NAME) || "About a Girl";

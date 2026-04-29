@@ -24,14 +24,12 @@ import { SiteSettings } from "./collections/globals/SiteSettings";
 import { AboutPage } from "./collections/globals/AboutPage";
 import { ContactPage } from "./collections/globals/ContactPage";
 import { FeaturesPage } from "./collections/globals/FeaturesPage";
+import { resolvePublicSiteOrigin } from "./lib/env/site-origin";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-const serverUrl =
-  process.env.NEXT_PUBLIC_SERVER_URL ??
-  process.env.PAYLOAD_PUBLIC_SERVER_URL ??
-  "http://localhost:3000";
+const serverUrl = resolvePublicSiteOrigin();
 
 export default buildConfig({
   serverURL: serverUrl,
