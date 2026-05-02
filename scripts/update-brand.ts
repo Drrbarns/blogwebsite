@@ -74,9 +74,17 @@ async function main() {
         ...current,
         brand: { label: siteConfig.name, tagline: "A girl with many sides." },
         cta: { label: "Contact us", url: "/contact", enabled: true },
+        social: {
+          ...((current.social as Record<string, unknown>) ?? {}),
+          facebook: siteConfig.links.facebook || "",
+          twitter: siteConfig.links.twitter || "",
+          instagram: siteConfig.links.instagram || "",
+          linkedin: siteConfig.links.linkedin || "",
+          youtube: siteConfig.links.youtube || "",
+        },
       } as never,
     });
-    log("navigation brand + CTA updated (links/columns preserved)");
+    log("navigation brand + CTA + socials updated (links/columns preserved)");
   } catch (err) {
     log("navigation update failed:", (err as Error).message);
   }

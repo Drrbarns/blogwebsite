@@ -7,11 +7,11 @@ export const siteConfig: SiteConfig = {
   url: "https://aboutagirl.blog",
   ogImage: "/images/og-default.jpg",
   links: {
-    facebook: "https://facebook.com",
-    twitter: "https://twitter.com",
-    instagram: "https://instagram.com",
-    linkedin: "https://linkedin.com",
-    youtube: "https://youtube.com",
+    facebook: "",
+    twitter: "",
+    instagram: "https://www.instagram.com/belidoh",
+    linkedin: "https://www.linkedin.com/in/dr-med-belinda-doh-76a228138",
+    youtube: "",
   },
   contact: {
     address: "On call · somewhere in West Africa",
